@@ -192,6 +192,7 @@ GameObject:
   - component: {fileID: 8135248851247538497}
   - component: {fileID: 3196429514757646833}
   - component: {fileID: 4712026552448113220}
+  - component: {fileID: 2793771894531522531}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Untagged
@@ -294,6 +295,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.6666666, y: 1.6666665}
   m_EdgeRadius: 0
+--- !u!210 &2793771894531522531
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993512181723143536}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &3049751468136931473
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +407,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4353813882844874222}
   - component: {fileID: 8268016395791658257}
-  - component: {fileID: 2959061955382614614}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -479,18 +491,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
---- !u!210 &2959061955382614614
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4093616459860459900}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortAtRoot: 0
 --- !u!1 &6320986642166349201
 GameObject:
   m_ObjectHideFlags: 0
