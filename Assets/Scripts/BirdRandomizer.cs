@@ -4,9 +4,7 @@ public class BirdRandomizer : MonoBehaviour
 {
     [Header("Color Palettes")]
     [SerializeField] private Color[] crestPalette = new Color[4];
-    [SerializeField] private Color[] headPalette = new Color[4];
-    [SerializeField] private Color[] wingPalette = new Color[4];
-    [SerializeField] private Color[] bellyPalette = new Color[4];
+    [SerializeField] private Color[] bodyPalette = new Color[4];
     
     [Header("Body Part References")]
     [SerializeField] private SpriteRenderer crestRenderer;
@@ -27,8 +25,7 @@ public class BirdRandomizer : MonoBehaviour
     
     private void RandomizeColors()
     {
-        if (crestPalette.Length != 4 || headPalette.Length != 4 || 
-            wingPalette.Length != 4 || bellyPalette.Length != 4)
+        if (crestPalette.Length != 4 || bodyPalette.Length != 4)
         {
             Debug.LogError("All color palettes must contain exactly 4 colors!");
             return;
@@ -45,12 +42,12 @@ public class BirdRandomizer : MonoBehaviour
             crestRenderer.color = crestPalette[CrestColorIndex];
         
         if (headRenderer != null)
-            headRenderer.color = headPalette[HeadColorIndex];
+            headRenderer.color = bodyPalette[HeadColorIndex];
         
         if (wingRenderer != null)
-            wingRenderer.color = wingPalette[WingColorIndex];
+            wingRenderer.color = bodyPalette[WingColorIndex];
         
         if (bellyRenderer != null)
-            bellyRenderer.color = bellyPalette[BellyColorIndex];
+            bellyRenderer.color = bodyPalette[BellyColorIndex];
     }
 }
