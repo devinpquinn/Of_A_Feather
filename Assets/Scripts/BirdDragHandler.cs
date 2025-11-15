@@ -8,11 +8,13 @@ public class BirdDragHandler : MonoBehaviour
     private Vector3 offset;
     private SortingGroup sortingGroup;
     private string originalSortingLayer;
+    private Animator animator;
     
     private void Start()
     {
         mainCamera = Camera.main;
         sortingGroup = GetComponent<SortingGroup>();
+        animator = GetComponent<Animator>();
         
         if (sortingGroup != null)
         {
@@ -46,6 +48,22 @@ public class BirdDragHandler : MonoBehaviour
         if (sortingGroup != null)
         {
             sortingGroup.sortingLayerName = originalSortingLayer;
+        }
+    }
+    
+    private void OnMouseEnter()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("Hover", true);
+        }
+    }
+    
+    private void OnMouseExit()
+    {
+        if (animator != null)
+        {
+            animator.SetBool("Hover", false);
         }
     }
     
