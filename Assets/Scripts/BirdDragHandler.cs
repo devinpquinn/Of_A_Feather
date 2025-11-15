@@ -31,6 +31,11 @@ public class BirdDragHandler : MonoBehaviour
         {
             sortingGroup.sortingLayerName = "Hovering";
         }
+        
+        if (animator != null)
+        {
+            animator.SetBool("Grabbed", true);
+        }
     }
     
     private void OnMouseDrag()
@@ -48,6 +53,12 @@ public class BirdDragHandler : MonoBehaviour
         if (sortingGroup != null)
         {
             sortingGroup.sortingLayerName = originalSortingLayer;
+        }
+        
+        if (animator != null)
+        {
+            animator.SetBool("Grabbed", false);
+            animator.SetBool("Hover", false);
         }
     }
     
