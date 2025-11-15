@@ -3,6 +3,8 @@ using UnityEngine.Rendering;
 
 public class BirdDragHandler : MonoBehaviour
 {
+    private static bool isDraggingAny = false;
+    
     private Camera mainCamera;
     private bool isDragging = false;
     private Vector3 offset;
@@ -25,6 +27,7 @@ public class BirdDragHandler : MonoBehaviour
     private void OnMouseDown()
     {
         isDragging = true;
+        isDraggingAny = true;
         offset = transform.position - GetMouseWorldPosition();
         
         if (sortingGroup != null)
@@ -49,6 +52,7 @@ public class BirdDragHandler : MonoBehaviour
     private void OnMouseUp()
     {
         isDragging = false;
+        isDraggingAny = false;
         
         if (sortingGroup != null)
         {
@@ -64,7 +68,7 @@ public class BirdDragHandler : MonoBehaviour
     
     private void OnMouseEnter()
     {
-        if (animator != null)
+        if (animator != null && !isDraggingAny)
         {
             animator.SetBool("Hover", true);
         }
