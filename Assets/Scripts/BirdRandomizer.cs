@@ -2,7 +2,11 @@ using UnityEngine;
 
 public class BirdRandomizer : MonoBehaviour
 {
-    [SerializeField] private Color[] colorPalette = new Color[4];
+    [Header("Color Palettes")]
+    [SerializeField] private Color[] crestPalette = new Color[4];
+    [SerializeField] private Color[] headPalette = new Color[4];
+    [SerializeField] private Color[] wingPalette = new Color[4];
+    [SerializeField] private Color[] bellyPalette = new Color[4];
     
     [Header("Body Part References")]
     [SerializeField] private SpriteRenderer crestRenderer;
@@ -23,13 +27,14 @@ public class BirdRandomizer : MonoBehaviour
     
     private void RandomizeColors()
     {
-        if (colorPalette.Length != 4)
+        if (crestPalette.Length != 4 || headPalette.Length != 4 || 
+            wingPalette.Length != 4 || bellyPalette.Length != 4)
         {
-            Debug.LogError("Color palette must contain exactly 4 colors!");
+            Debug.LogError("All color palettes must contain exactly 4 colors!");
             return;
         }
         
-        // Randomly assign colors to each body part
+        // Randomly assign colors to each body part from their respective palettes
         CrestColorIndex = Random.Range(0, 4);
         HeadColorIndex = Random.Range(0, 4);
         WingColorIndex = Random.Range(0, 4);
@@ -37,15 +42,15 @@ public class BirdRandomizer : MonoBehaviour
         
         // Apply colors to sprite renderers
         if (crestRenderer != null)
-            crestRenderer.color = colorPalette[CrestColorIndex];
+            crestRenderer.color = crestPalette[CrestColorIndex];
         
         if (headRenderer != null)
-            headRenderer.color = colorPalette[HeadColorIndex];
+            headRenderer.color = headPalette[HeadColorIndex];
         
         if (wingRenderer != null)
-            wingRenderer.color = colorPalette[WingColorIndex];
+            wingRenderer.color = wingPalette[WingColorIndex];
         
         if (bellyRenderer != null)
-            bellyRenderer.color = colorPalette[BellyColorIndex];
+            bellyRenderer.color = bellyPalette[BellyColorIndex];
     }
 }
