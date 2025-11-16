@@ -82,7 +82,7 @@ public class BirdDragHandler : MonoBehaviour
         
         if (defaultCursor != null)
         {
-            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+            Cursor.SetCursor(hoverCursor, Vector2.zero, CursorMode.Auto);
         }
     }
     
