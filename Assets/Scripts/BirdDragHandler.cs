@@ -3,6 +3,11 @@ using UnityEngine.Rendering;
 
 public class BirdDragHandler : MonoBehaviour
 {
+    [Header("Cursor Settings")]
+    [SerializeField] private Texture2D defaultCursor;
+    [SerializeField] private Texture2D hoverCursor;
+    [SerializeField] private Texture2D grabbedCursor;
+    
     private static bool isDraggingAny = false;
     
     private Camera mainCamera;
@@ -22,6 +27,11 @@ public class BirdDragHandler : MonoBehaviour
         {
             originalSortingLayer = sortingGroup.sortingLayerName;
         }
+        
+        if (defaultCursor != null)
+        {
+            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+        }
     }
     
     private void OnMouseDown()
@@ -38,6 +48,11 @@ public class BirdDragHandler : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("Grabbed", true);
+        }
+        
+        if (grabbedCursor != null)
+        {
+            Cursor.SetCursor(grabbedCursor, Vector2.zero, CursorMode.Auto);
         }
     }
     
@@ -64,6 +79,11 @@ public class BirdDragHandler : MonoBehaviour
             animator.SetBool("Grabbed", false);
             animator.SetBool("Hover", false);
         }
+        
+        if (defaultCursor != null)
+        {
+            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+        }
     }
     
     private void OnMouseEnter()
@@ -72,6 +92,11 @@ public class BirdDragHandler : MonoBehaviour
         {
             animator.SetBool("Hover", true);
         }
+        
+        if (hoverCursor != null && !isDraggingAny)
+        {
+            Cursor.SetCursor(hoverCursor, Vector2.zero, CursorMode.Auto);
+        }
     }
     
     private void OnMouseExit()
@@ -79,6 +104,11 @@ public class BirdDragHandler : MonoBehaviour
         if (animator != null)
         {
             animator.SetBool("Hover", false);
+        }
+        
+        if (defaultCursor != null && !isDragging)
+        {
+            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
         }
     }
     

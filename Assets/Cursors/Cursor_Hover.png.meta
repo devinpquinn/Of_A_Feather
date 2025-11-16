@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 31dd054f890961240910e89a7a2c2aa7
+guid: ba01a5707fdcd0945b37cf0ae9403553
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9187137634978771180
-    second: tile_0178_0
+      213: 6424969864989748699
+    second: tile_0135_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -57,7 +57,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 8
+  textureType: 7
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -113,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: tile_0178_0
+      name: tile_0135_0
       rect:
         serializedVersion: 2
         x: 0
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 41fc77c1ffab08080800000000000000
-      internalID: -9187137634978771180
+      spriteID: bddad4f1d041a2950800000000000000
+      internalID: 6424969864989748699
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      tile_0178_0: -9187137634978771180
+      tile_0135_0: 6424969864989748699
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
