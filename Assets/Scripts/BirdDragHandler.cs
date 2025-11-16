@@ -8,6 +8,10 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
     
+    private float topBufferDistance = 2.0f;
+    private float bottomBufferDistance = 0.33f;
+    private float sideBufferDistance = 1.0f;
+    
     private static bool isDraggingAny = false;
     
     private Camera mainCamera;
@@ -60,7 +64,8 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (isDragging)
         {
-            transform.position = GetMouseWorldPosition() + offset;
+            Vector3 targetPosition = GetMouseWorldPosition() + offset;
+            transform.position = ClampToScreenBounds(targetPosition);
         }
     }
     
@@ -117,5 +122,18 @@ public class BirdDragHandler : MonoBehaviour
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = mainCamera.WorldToScreenPoint(transform.position).z;
         return mainCamera.ScreenToWorldPoint(mousePoint);
+    }
+    
+    private Vector3 ClampToScreenBounds(Vector3 position)
+    {
+        // Get the camera's viewport boundaries in world space
+        Vector3 bottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, position.z));
+        Vector3 topRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, position.z));
+        
+        // Clamp the position within the buffer zone with separate distances
+        float clampedX = Mathf.Clamp(position.x, bottomLeft.x + sideBufferDistance, topRight.x - sideBufferDistance);
+        float clampedY = Mathf.Clamp(position.y, bottomLeft.y + bottomBufferDistance, topRight.y - topBufferDistance);
+        
+        return new Vector3(clampedX, clampedY, position.z);
     }
 }
