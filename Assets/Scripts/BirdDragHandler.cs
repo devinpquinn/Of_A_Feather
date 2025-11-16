@@ -40,13 +40,6 @@ public class BirdDragHandler : MonoBehaviour
         // Initialize velocity tracking array
         recentVelocities = new Vector3[velocitySamples];
         
-        // Ensure Rigidbody2D is kinematic during dragging setup
-        if (rb != null)
-        {
-            rb.bodyType = RigidbodyType2D.Dynamic;
-            rb.gravityScale = 0f;
-        }
-        
         if (sortingGroup != null)
         {
             originalSortingLayer = sortingGroup.sortingLayerName;
