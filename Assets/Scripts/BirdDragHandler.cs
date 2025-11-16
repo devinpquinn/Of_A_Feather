@@ -8,6 +8,12 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
     
+    [Header("Momentum Settings")]
+    [SerializeField] private float momentumMultiplier = 1.5f;
+    [SerializeField] private float maxFlingSpeed = 20f;
+    [SerializeField] private int velocitySamples = 3;
+    [SerializeField] private float flingDuration = 0.1f;
+    
     private static bool isDraggingAny = false;
     
     private Camera mainCamera;
@@ -16,12 +22,30 @@ public class BirdDragHandler : MonoBehaviour
     private SortingGroup sortingGroup;
     private string originalSortingLayer;
     private Animator animator;
+    private Rigidbody2D rb;
+    
+    // Momentum tracking
+    private Vector3 lastMousePosition;
+    private Vector3[] recentVelocities;
+    private int velocityIndex = 0;
+    private Coroutine stopCoroutine;
     
     private void Start()
     {
         mainCamera = Camera.main;
         sortingGroup = GetComponent<SortingGroup>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        
+        // Initialize velocity tracking array
+        recentVelocities = new Vector3[velocitySamples];
+        
+        // Ensure Rigidbody2D is kinematic during dragging setup
+        if (rb != null)
+        {
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.gravityScale = 0f;
+        }
         
         if (sortingGroup != null)
         {
@@ -39,6 +63,26 @@ public class BirdDragHandler : MonoBehaviour
         isDragging = true;
         isDraggingAny = true;
         offset = transform.position - GetMouseWorldPosition();
+        
+        // Reset velocity tracking
+        lastMousePosition = GetMouseWorldPosition();
+        for (int i = 0; i < recentVelocities.Length; i++)
+        {
+            recentVelocities[i] = Vector3.zero;
+        }
+        velocityIndex = 0;
+        
+        // Stop any existing velocity and coroutines
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+        
+        if (stopCoroutine != null)
+        {
+            StopCoroutine(stopCoroutine);
+            stopCoroutine = null;
+        }
         
         if (sortingGroup != null)
         {
@@ -60,7 +104,14 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (isDragging)
         {
-            transform.position = GetMouseWorldPosition() + offset;
+            Vector3 currentMousePosition = GetMouseWorldPosition();
+            transform.position = currentMousePosition + offset;
+            
+            // Track velocity for momentum calculation
+            Vector3 velocity = (currentMousePosition - lastMousePosition) / Time.deltaTime;
+            recentVelocities[velocityIndex] = velocity;
+            velocityIndex = (velocityIndex + 1) % recentVelocities.Length;
+            lastMousePosition = currentMousePosition;
         }
     }
     
@@ -68,6 +119,35 @@ public class BirdDragHandler : MonoBehaviour
     {
         isDragging = false;
         isDraggingAny = false;
+        
+        // Calculate average velocity from recent samples
+        Vector3 averageVelocity = Vector3.zero;
+        for (int i = 0; i < recentVelocities.Length; i++)
+        {
+            averageVelocity += recentVelocities[i];
+        }
+        averageVelocity /= recentVelocities.Length;
+        
+        // Apply momentum to the bird
+        if (rb != null)
+        {
+            Vector2 flingVelocity = averageVelocity * momentumMultiplier;
+            
+            // Clamp to maximum fling speed
+            if (flingVelocity.magnitude > maxFlingSpeed)
+            {
+                flingVelocity = flingVelocity.normalized * maxFlingSpeed;
+            }
+            
+            rb.linearVelocity = flingVelocity;
+            
+            // Start coroutine to stop the bird after the fling duration
+            if (stopCoroutine != null)
+            {
+                StopCoroutine(stopCoroutine);
+            }
+            stopCoroutine = StartCoroutine(StopBirdAfterDuration());
+        }
         
         if (sortingGroup != null)
         {
@@ -117,5 +197,17 @@ public class BirdDragHandler : MonoBehaviour
         Vector3 mousePoint = Input.mousePosition;
         mousePoint.z = mainCamera.WorldToScreenPoint(transform.position).z;
         return mainCamera.ScreenToWorldPoint(mousePoint);
+    }
+    
+    private System.Collections.IEnumerator StopBirdAfterDuration()
+    {
+        yield return new WaitForSeconds(flingDuration);
+        
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+        
+        stopCoroutine = null;
     }
 }
