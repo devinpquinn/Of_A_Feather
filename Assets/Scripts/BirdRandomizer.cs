@@ -59,6 +59,14 @@ public class BirdRandomizer : MonoBehaviour
         SetPartColor(3, bellyIndex);
     }
     
+    public bool CheckMismatched(int[] partnerColors)
+    {
+        return CrestColorIndex != partnerColors[0] &&
+               HeadColorIndex != partnerColors[1] &&
+               WingColorIndex != partnerColors[2] &&
+               BellyColorIndex != partnerColors[3];
+    }
+    
     public void RandomizeColors()
     {
         if (colorPalette.Length != 4)
