@@ -18,6 +18,7 @@ public class BirdDragHandler : MonoBehaviour
 
     private BirdDragHandler currentPartner = null;
     private LineRenderer pairLineRenderer = null;
+    private LineRenderer pairLineOutline = null;
 
     private Camera mainCamera;
     private bool isDragging = false;
@@ -289,11 +290,25 @@ public class BirdDragHandler : MonoBehaviour
                 pairLineRenderer = null;
             }
             
+            // Destroy outline if it exists
+            if (pairLineOutline != null)
+            {
+                Destroy(pairLineOutline.gameObject);
+                pairLineOutline = null;
+            }
+            
             // Also destroy partner's line renderer if it exists
             if (currentPartner.pairLineRenderer != null)
             {
                 Destroy(currentPartner.pairLineRenderer.gameObject);
                 currentPartner.pairLineRenderer = null;
+            }
+            
+            // Also destroy partner's outline if it exists
+            if (currentPartner.pairLineOutline != null)
+            {
+                Destroy(currentPartner.pairLineOutline.gameObject);
+                currentPartner.pairLineOutline = null;
             }
 
             // Break the connection from both sides
@@ -311,7 +326,22 @@ public class BirdDragHandler : MonoBehaviour
     
     private void CreatePairLine(BirdDragHandler otherBird)
     {
-        // Create a new GameObject for the line renderer
+        // Create black outline (thicker, lower sorting order)
+        GameObject outlineObject = new GameObject($"PairLineOutline_{gameObject.name}_{otherBird.gameObject.name}");
+        pairLineOutline = outlineObject.AddComponent<LineRenderer>();
+        
+        pairLineOutline.positionCount = 2;
+        pairLineOutline.startWidth = 0.0833f * 3f;
+        pairLineOutline.endWidth = 0.0833f * 3f;
+        pairLineOutline.material = new Material(Shader.Find("Sprites/Default"));
+        pairLineOutline.startColor = Color.black;
+        pairLineOutline.endColor = Color.black;
+        pairLineOutline.sortingOrder = -3;
+        
+        pairLineOutline.SetPosition(0, transform.position);
+        pairLineOutline.SetPosition(1, otherBird.transform.position);
+        
+        // Create white line on top
         GameObject lineObject = new GameObject($"PairLine_{gameObject.name}_{otherBird.gameObject.name}");
         pairLineRenderer = lineObject.AddComponent<LineRenderer>();
         
