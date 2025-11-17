@@ -10,6 +10,8 @@ public class BirdRandomizer : MonoBehaviour
     [SerializeField] private SpriteRenderer wingRenderer;
     [SerializeField] private SpriteRenderer bellyRenderer;
     
+    public GameObject pedestal;
+    
     // Store assigned color indices
     [HideInInspector] public int CrestColorIndex { get; private set; }
     [HideInInspector] public int HeadColorIndex { get; private set; }

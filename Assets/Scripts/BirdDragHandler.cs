@@ -17,6 +17,7 @@ public class BirdDragHandler : MonoBehaviour
     private static bool isDraggingAny = false;
 
     private BirdDragHandler currentPartner = null;
+    private LineRenderer pairLineRenderer = null;
 
     private Camera mainCamera;
     private bool isDragging = false;
@@ -243,6 +244,9 @@ public class BirdDragHandler : MonoBehaviour
         currentPartner = otherBird;
         otherBird.currentPartner = this;
 
+        // Create line renderer for this bird
+        CreatePairLine(otherBird);
+
         // Play nudge animation on the partner
         if (otherBird.animator != null)
         {
@@ -264,6 +268,34 @@ public class BirdDragHandler : MonoBehaviour
         {
             Debug.Log($"Breaking pair between {gameObject.name} and {currentPartner.gameObject.name}");
 
+            // Disable pedestals for both birds
+            BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
+            BirdRandomizer partnerRandomizer = currentPartner.GetComponent<BirdRandomizer>();
+            
+            if (myRandomizer != null && myRandomizer.pedestal != null)
+            {
+                myRandomizer.pedestal.SetActive(false);
+            }
+            
+            if (partnerRandomizer != null && partnerRandomizer.pedestal != null)
+            {
+                partnerRandomizer.pedestal.SetActive(false);
+            }
+
+            // Destroy line renderer if it exists
+            if (pairLineRenderer != null)
+            {
+                Destroy(pairLineRenderer.gameObject);
+                pairLineRenderer = null;
+            }
+            
+            // Also destroy partner's line renderer if it exists
+            if (currentPartner.pairLineRenderer != null)
+            {
+                Destroy(currentPartner.pairLineRenderer.gameObject);
+                currentPartner.pairLineRenderer = null;
+            }
+
             // Break the connection from both sides
             BirdDragHandler formerPartner = currentPartner;
             currentPartner.currentPartner = null;
@@ -274,6 +306,40 @@ public class BirdDragHandler : MonoBehaviour
             {
                 BirdGameManager.Instance.OnPairBroken();
             }
+        }
+    }
+    
+    private void CreatePairLine(BirdDragHandler otherBird)
+    {
+        // Create a new GameObject for the line renderer
+        GameObject lineObject = new GameObject($"PairLine_{gameObject.name}_{otherBird.gameObject.name}");
+        pairLineRenderer = lineObject.AddComponent<LineRenderer>();
+        
+        // Configure line renderer
+        pairLineRenderer.positionCount = 2;
+        pairLineRenderer.startWidth = 0.0833f;
+        pairLineRenderer.endWidth = 0.0833f;
+        pairLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        pairLineRenderer.startColor = Color.white;
+        pairLineRenderer.endColor = Color.white;
+        pairLineRenderer.sortingOrder = -1;
+        
+        // Set positions
+        pairLineRenderer.SetPosition(0, transform.position);
+        pairLineRenderer.SetPosition(1, otherBird.transform.position);
+        
+        // Enable pedestals for both birds
+        BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
+        BirdRandomizer otherRandomizer = otherBird.GetComponent<BirdRandomizer>();
+        
+        if (myRandomizer != null && myRandomizer.pedestal != null)
+        {
+            myRandomizer.pedestal.SetActive(true);
+        }
+        
+        if (otherRandomizer != null && otherRandomizer.pedestal != null)
+        {
+            otherRandomizer.pedestal.SetActive(true);
         }
     }
 }

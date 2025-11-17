@@ -330,6 +330,7 @@ MonoBehaviour:
   headRenderer: {fileID: 2443192641571302299}
   wingRenderer: {fileID: 8618030537060370620}
   bellyRenderer: {fileID: 2318999108740362249}
+  pedestal: {fileID: 1222433881853489923}
 --- !u!114 &3196429514757646833
 MonoBehaviour:
   m_ObjectHideFlags: 0
