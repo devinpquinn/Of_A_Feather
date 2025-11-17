@@ -251,7 +251,7 @@ public class BirdDragHandler : MonoBehaviour
         // Play nudge animation on the partner
         if (otherBird.animator != null)
         {
-            otherBird.animator.Play("Bird_Nudge");
+            otherBird.animator.Play("Bird_Nudge", 0, 0f);
         }
 
         // Notify the game manager
