@@ -8,11 +8,16 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
     
+    [Header("Pairing Settings")]
+    [SerializeField] private float pairingDistance = 2.0f;
+    
     private float topBufferDistance = 2.0f;
     private float bottomBufferDistance = 0.33f;
     private float sideBufferDistance = 1.0f;
     
     private static bool isDraggingAny = false;
+    
+    private BirdDragHandler currentPartner = null;
     
     private Camera mainCamera;
     private bool isDragging = false;
@@ -44,6 +49,9 @@ public class BirdDragHandler : MonoBehaviour
         isDraggingAny = true;
         offset = transform.position - GetMouseWorldPosition();
         
+        // Break existing pair
+        BreakPair();
+        
         if (sortingGroup != null)
         {
             sortingGroup.sortingLayerName = "Hovering";
@@ -73,6 +81,9 @@ public class BirdDragHandler : MonoBehaviour
     {
         isDragging = false;
         isDraggingAny = false;
+        
+        // Check for nearby birds to pair with
+        CheckForPairing();
         
         if (sortingGroup != null)
         {
@@ -135,5 +146,107 @@ public class BirdDragHandler : MonoBehaviour
         float clampedY = Mathf.Clamp(position.y, bottomLeft.y + bottomBufferDistance, topRight.y - topBufferDistance);
         
         return new Vector3(clampedX, clampedY, position.z);
+    }
+    
+    private void CheckForPairing()
+    {
+        BirdDragHandler[] allBirds = FindObjectsByType<BirdDragHandler>(FindObjectsSortMode.None);
+        BirdDragHandler closestValidBird = null;
+        float closestDistance = float.MaxValue;
+        
+        foreach (BirdDragHandler otherBird in allBirds)
+        {
+            if (otherBird == this) continue;
+            
+            float distance = Vector3.Distance(transform.position, otherBird.transform.position);
+            
+            // Check if within pairing distance
+            if (distance <= pairingDistance)
+            {
+                // If the other bird has a partner, this bird must be closer than the current partner
+                if (otherBird.currentPartner != null)
+                {
+                    float partnerDistance = Vector3.Distance(otherBird.transform.position, otherBird.currentPartner.transform.position);
+                    if (distance >= partnerDistance)
+                    {
+                        continue; // Not close enough to steal the partner
+                    }
+                }
+                
+                // Check if colors are mismatched
+                if (AreColorsMismatched(otherBird))
+                {
+                    if (distance < closestDistance)
+                    {
+                        closestDistance = distance;
+                        closestValidBird = otherBird;
+                    }
+                }
+            }
+        }
+        
+        // If a valid bird was found, establish the pair
+        if (closestValidBird != null)
+        {
+            EstablishPair(closestValidBird);
+        }
+    }
+    
+    private bool AreColorsMismatched(BirdDragHandler otherBird)
+    {
+        BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
+        BirdRandomizer otherRandomizer = otherBird.GetComponent<BirdRandomizer>();
+        
+        if (myRandomizer == null || otherRandomizer == null)
+        {
+            return false;
+        }
+        
+        int[] myColors = myRandomizer.GetColors();
+        int[] otherColors = otherRandomizer.GetColors();
+        
+        return myRandomizer.CheckMismatched(otherColors);
+    }
+    
+    private void EstablishPair(BirdDragHandler otherBird)
+    {
+        // Break the other bird's existing pair if it has one
+        if (otherBird.currentPartner != null)
+        {
+            otherBird.BreakPair();
+        }
+        
+        // Establish the new pair
+        currentPartner = otherBird;
+        otherBird.currentPartner = this;
+        
+        // Set rotations based on which bird is leftmost
+        if (transform.position.x < otherBird.transform.position.x)
+        {
+            // This bird is on the left
+            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            otherBird.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        else
+        {
+            // Other bird is on the left
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            otherBird.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
+        
+        Debug.Log($"Paired {gameObject.name} with {otherBird.gameObject.name}");
+    }
+    
+    private void BreakPair()
+    {
+        if (currentPartner != null)
+        {
+            Debug.Log($"Breaking pair between {gameObject.name} and {currentPartner.gameObject.name}");
+            
+            // Break the connection from both sides
+            BirdDragHandler formerPartner = currentPartner;
+            currentPartner.currentPartner = null;
+            currentPartner = null;
+        }
     }
 }
