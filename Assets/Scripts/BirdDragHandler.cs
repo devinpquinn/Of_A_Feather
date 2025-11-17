@@ -29,7 +29,7 @@ public class BirdDragHandler : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        sortingGroup = GetComponent<SortingGroup>();
+        sortingGroup = GetComponentInChildren<SortingGroup>();
         animator = GetComponent<Animator>();
 
         if (sortingGroup != null)

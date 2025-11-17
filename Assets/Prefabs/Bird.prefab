@@ -168,7 +168,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 833cd27475986cf478ae402546c61f12, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -281,7 +281,6 @@ GameObject:
   - component: {fileID: 8669333489728523706}
   - component: {fileID: 8135248851247538497}
   - component: {fileID: 3196429514757646833}
-  - component: {fileID: 2793771894531522531}
   - component: {fileID: 7490156472225559571}
   - component: {fileID: 7332197506585057839}
   m_Layer: 0
@@ -346,18 +345,6 @@ MonoBehaviour:
   defaultCursor: {fileID: 2800000, guid: da0fc62db904dfc498eb8203e458eea0, type: 3}
   hoverCursor: {fileID: 2800000, guid: ba01a5707fdcd0945b37cf0ae9403553, type: 3}
   grabbedCursor: {fileID: 2800000, guid: 64075b032218a9b499e95eef81ff9229, type: 3}
---- !u!210 &2793771894531522531
-SortingGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1993512181723143536}
-  m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_SortAtRoot: 0
 --- !u!95 &7490156472225559571
 Animator:
   serializedVersion: 7
@@ -542,6 +529,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4353813882844874222}
   - component: {fileID: 8268016395791658257}
+  - component: {fileID: 2536980189510633084}
   m_Layer: 0
   m_Name: Base
   m_TagString: Untagged
@@ -626,6 +614,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!210 &2536980189510633084
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4093616459860459900}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!1 &5949102315043274129
 GameObject:
   m_ObjectHideFlags: 0
