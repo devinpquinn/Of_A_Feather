@@ -14,6 +14,7 @@ public class BirdGameManager : MonoBehaviour
     public int numPairsToSpawn = 5; //the number of pairs of birds to spawn; each pair consists of two birds that do not share any of the same color in the same body part
     
     private int birdCounter = 1;
+    private int currentPairCount = 0;
     
     private void Awake()
     {
@@ -85,5 +86,27 @@ public class BirdGameManager : MonoBehaviour
         {
             birdRandomizer.SetColors(crestIndex, headIndex, wingIndex, bellyIndex);
         }
+    }
+    
+    public void OnPairFormed()
+    {
+        currentPairCount++;
+        Debug.Log($"Pair formed! Current pairs: {currentPairCount}/{numPairsToSpawn}");
+        
+        if (currentPairCount >= numPairsToSpawn)
+        {
+            OnRoundComplete();
+        }
+    }
+    
+    public void OnPairBroken()
+    {
+        currentPairCount--;
+        Debug.Log($"Pair broken. Current pairs: {currentPairCount}/{numPairsToSpawn}");
+    }
+    
+    private void OnRoundComplete()
+    {
+        Debug.Log("🎉 Round Complete! All bird pairs have been matched!");
     }
 }

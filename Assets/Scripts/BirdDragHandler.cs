@@ -243,6 +243,12 @@ public class BirdDragHandler : MonoBehaviour
         currentPartner = otherBird;
         otherBird.currentPartner = this;
         
+        // Notify the game manager
+        if (BirdGameManager.Instance != null)
+        {
+            BirdGameManager.Instance.OnPairFormed();
+        }
+        
         // Set rotations based on which bird is leftmost
         if (transform.position.x < otherBird.transform.position.x)
         {
@@ -270,6 +276,12 @@ public class BirdDragHandler : MonoBehaviour
             BirdDragHandler formerPartner = currentPartner;
             currentPartner.currentPartner = null;
             currentPartner = null;
+            
+            // Notify the game manager
+            if (BirdGameManager.Instance != null)
+            {
+                BirdGameManager.Instance.OnPairBroken();
+            }
         }
     }
 }
