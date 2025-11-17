@@ -8,8 +8,7 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
     
-    [Header("Pairing Settings")]
-    [SerializeField] private float pairingDistance = 2.0f;
+    private float pairingDistance = 3.0f;
     
     private float topBufferDistance = 2.0f;
     private float bottomBufferDistance = 0.33f;
@@ -185,11 +184,35 @@ public class BirdDragHandler : MonoBehaviour
             }
         }
         
-        // If a valid bird was found, establish the pair
+        // If a valid bird was found, verify that this bird is closer to it than to any other bird
         if (closestValidBird != null)
         {
-            EstablishPair(closestValidBird);
+            // Check if the closestValidBird is actually the closest bird overall to this bird
+            if (IsClosestBird(closestValidBird, allBirds))
+            {
+                EstablishPair(closestValidBird);
+            }
         }
+    }
+    
+    private bool IsClosestBird(BirdDragHandler targetBird, BirdDragHandler[] allBirds)
+    {
+        float distanceToTarget = Vector3.Distance(transform.position, targetBird.transform.position);
+        
+        foreach (BirdDragHandler otherBird in allBirds)
+        {
+            if (otherBird == this || otherBird == targetBird) continue;
+            
+            float otherDistance = Vector3.Distance(transform.position, otherBird.transform.position);
+            
+            // If any other bird is closer, the target isn't the closest
+            if (otherDistance < distanceToTarget)
+            {
+                return false;
+            }
+        }
+        
+        return true;
     }
     
     private bool AreColorsMismatched(BirdDragHandler otherBird)
