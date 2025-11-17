@@ -13,6 +13,8 @@ public class BirdGameManager : MonoBehaviour
     
     public int numPairsToSpawn = 5; //the number of pairs of birds to spawn; each pair consists of two birds that do not share any of the same color in the same body part
     
+    private int birdCounter = 1;
+    
     private void Awake()
     {
         Instance = this;
@@ -75,6 +77,9 @@ public class BirdGameManager : MonoBehaviour
         );
 
         GameObject bird = Instantiate(birdPrefab, spawnPosition, Quaternion.identity);
+        bird.name = $"Bird {birdCounter}";
+        birdCounter++;
+        
         BirdRandomizer birdRandomizer = bird.GetComponent<BirdRandomizer>();
         if (birdRandomizer != null)
         {
