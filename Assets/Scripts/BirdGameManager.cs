@@ -88,6 +88,13 @@ public class BirdGameManager : MonoBehaviour
         }
     }
     
+    public static float IsometricDistance(Vector3 a, Vector3 b)
+    {
+        //decrease X distance by half
+        Vector3 delta = a - b;
+        return Mathf.Sqrt(((delta.x * 0.5f) * (delta.x * 0.5f)) + (delta.y * delta.y));
+    }
+    
     public void OnPairFormed()
     {
         currentPairCount++;

@@ -8,7 +8,7 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
 
-    private float pairingDistance = 2.0f;
+    private float pairingDistance = 1.0f;
 
     private float topBufferDistance = 2.0f;
     private float bottomBufferDistance = 0.33f;
@@ -158,7 +158,7 @@ public class BirdDragHandler : MonoBehaviour
         {
             if (otherBird == this) continue;
 
-            float distance = Vector3.Distance(transform.position, otherBird.transform.position);
+            float distance = BirdGameManager.IsometricDistance(transform.position, otherBird.transform.position);
 
             // Check if within pairing distance
             if (distance <= pairingDistance)
@@ -166,7 +166,7 @@ public class BirdDragHandler : MonoBehaviour
                 // If the other bird has a partner, this bird must be closer than the current partner
                 if (otherBird.currentPartner != null)
                 {
-                    float partnerDistance = Vector3.Distance(otherBird.transform.position, otherBird.currentPartner.transform.position);
+                    float partnerDistance = BirdGameManager.IsometricDistance(otherBird.transform.position, otherBird.currentPartner.transform.position);
                     if (distance >= partnerDistance)
                     {
                         continue; // Not close enough to steal the partner
@@ -198,13 +198,13 @@ public class BirdDragHandler : MonoBehaviour
 
     private bool IsClosestBird(BirdDragHandler targetBird, BirdDragHandler[] allBirds)
     {
-        float distanceToTarget = Vector3.Distance(transform.position, targetBird.transform.position);
+        float distanceToTarget = BirdGameManager.IsometricDistance(transform.position, targetBird.transform.position);
 
         foreach (BirdDragHandler otherBird in allBirds)
         {
             if (otherBird == this || otherBird == targetBird) continue;
 
-            float otherDistance = Vector3.Distance(transform.position, otherBird.transform.position);
+            float otherDistance = BirdGameManager.IsometricDistance(transform.position, otherBird.transform.position);
 
             // If any other bird is closer, the target isn't the closest
             if (otherDistance < distanceToTarget)
