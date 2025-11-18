@@ -4,6 +4,11 @@ public class BirdRandomizer : MonoBehaviour
 {
     [SerializeField] private Color[] colorPalette = new Color[4];
     
+    [Header("Connection Settings")]
+    [SerializeField] private Color connectionColor = Color.white;
+    
+    public Color ConnectionColor => connectionColor;
+    
     [Header("Body Part References")]
     [SerializeField] private SpriteRenderer crestRenderer;
     [SerializeField] private SpriteRenderer headRenderer;

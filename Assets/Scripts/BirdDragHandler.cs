@@ -326,6 +326,10 @@ public class BirdDragHandler : MonoBehaviour
     
     private void CreatePairLine(BirdDragHandler otherBird)
     {
+        // Get the connection color from this bird's randomizer
+        BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
+        Color connectionColor = myRandomizer != null ? myRandomizer.ConnectionColor : Color.white;
+        
         // Create black outline (thicker, lower sorting order)
         GameObject outlineObject = new GameObject($"PairLineOutline_{gameObject.name}_{otherBird.gameObject.name}");
         pairLineOutline = outlineObject.AddComponent<LineRenderer>();
@@ -341,7 +345,7 @@ public class BirdDragHandler : MonoBehaviour
         pairLineOutline.SetPosition(0, transform.position);
         pairLineOutline.SetPosition(1, otherBird.transform.position);
         
-        // Create white line on top
+        // Create colored line on top
         GameObject lineObject = new GameObject($"PairLine_{gameObject.name}_{otherBird.gameObject.name}");
         pairLineRenderer = lineObject.AddComponent<LineRenderer>();
         
@@ -350,26 +354,35 @@ public class BirdDragHandler : MonoBehaviour
         pairLineRenderer.startWidth = 0.0833f;
         pairLineRenderer.endWidth = 0.0833f;
         pairLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
-        pairLineRenderer.startColor = Color.white;
-        pairLineRenderer.endColor = Color.white;
+        pairLineRenderer.startColor = connectionColor;
+        pairLineRenderer.endColor = connectionColor;
         pairLineRenderer.sortingOrder = -1;
         
         // Set positions
         pairLineRenderer.SetPosition(0, transform.position);
         pairLineRenderer.SetPosition(1, otherBird.transform.position);
         
-        // Enable pedestals for both birds
-        BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
+        // Enable and color pedestals for both birds
         BirdRandomizer otherRandomizer = otherBird.GetComponent<BirdRandomizer>();
         
         if (myRandomizer != null && myRandomizer.pedestal != null)
         {
             myRandomizer.pedestal.SetActive(true);
+            SpriteRenderer pedestalRenderer = myRandomizer.pedestal.GetComponent<SpriteRenderer>();
+            if (pedestalRenderer != null)
+            {
+                pedestalRenderer.color = connectionColor;
+            }
         }
         
         if (otherRandomizer != null && otherRandomizer.pedestal != null)
         {
             otherRandomizer.pedestal.SetActive(true);
+            SpriteRenderer pedestalRenderer = otherRandomizer.pedestal.GetComponent<SpriteRenderer>();
+            if (pedestalRenderer != null)
+            {
+                pedestalRenderer.color = connectionColor;
+            }
         }
     }
 }
