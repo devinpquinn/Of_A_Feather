@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -192,7 +193,7 @@ public class BirdDragHandler : MonoBehaviour
             // Check if the closestValidBird is actually the closest bird overall to this bird
             if (IsClosestBird(closestValidBird, allBirds))
             {
-                EstablishPair(closestValidBird);
+                StartCoroutine(EstablishPairDelayed(closestValidBird));
             }
         }
     }
@@ -231,6 +232,12 @@ public class BirdDragHandler : MonoBehaviour
         int[] otherColors = otherRandomizer.GetColors();
 
         return myRandomizer.CheckMismatched(otherColors);
+    }
+
+    private IEnumerator EstablishPairDelayed(BirdDragHandler otherBird)
+    {
+        yield return new WaitForSeconds(0.0833f);
+        EstablishPair(otherBird);
     }
 
     private void EstablishPair(BirdDragHandler otherBird)
