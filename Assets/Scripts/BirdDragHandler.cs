@@ -282,12 +282,12 @@ public class BirdDragHandler : MonoBehaviour
             
             if (myRandomizer != null && myRandomizer.pedestal != null)
             {
-                myRandomizer.pedestal.SetActive(false);
+                myRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_Out", 0, 0f);
             }
             
             if (partnerRandomizer != null && partnerRandomizer.pedestal != null)
             {
-                partnerRandomizer.pedestal.SetActive(false);
+                partnerRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_Out", 0, 0f);
             }
 
             // Destroy line renderer if it exists
@@ -374,7 +374,7 @@ public class BirdDragHandler : MonoBehaviour
         
         if (myRandomizer != null && myRandomizer.pedestal != null)
         {
-            myRandomizer.pedestal.SetActive(true);
+            myRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_In", 0, 0f);
             SpriteRenderer pedestalRenderer = myRandomizer.pedestal.GetComponent<SpriteRenderer>();
             if (pedestalRenderer != null)
             {
@@ -384,7 +384,7 @@ public class BirdDragHandler : MonoBehaviour
         
         if (otherRandomizer != null && otherRandomizer.pedestal != null)
         {
-            otherRandomizer.pedestal.SetActive(true);
+            otherRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_In", 0, 0f);
             SpriteRenderer pedestalRenderer = otherRandomizer.pedestal.GetComponent<SpriteRenderer>();
             if (pedestalRenderer != null)
             {
