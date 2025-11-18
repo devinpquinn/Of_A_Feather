@@ -16,6 +16,8 @@ public class BirdGameManager : MonoBehaviour
     private int birdCounter = 1;
     private int currentPairCount = 0;
     
+    public bool IsRoundComplete { get; private set; } = false;
+    
     private void Awake()
     {
         Instance = this;
@@ -114,6 +116,7 @@ public class BirdGameManager : MonoBehaviour
     
     private void OnRoundComplete()
     {
+        IsRoundComplete = true;
         Debug.Log("🎉 Round Complete! All bird pairs have been matched!");
     }
 }

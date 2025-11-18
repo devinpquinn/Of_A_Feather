@@ -47,6 +47,10 @@ public class BirdDragHandler : MonoBehaviour
 
     private void OnMouseDown()
     {
+        // Disable input if round is complete
+        if (BirdGameManager.Instance != null && BirdGameManager.Instance.IsRoundComplete)
+            return;
+            
         isDragging = true;
         isDraggingAny = true;
         offset = transform.position - GetMouseWorldPosition();
@@ -106,6 +110,10 @@ public class BirdDragHandler : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        // Disable hover if round is complete
+        if (BirdGameManager.Instance != null && BirdGameManager.Instance.IsRoundComplete)
+            return;
+            
         if (animator != null && !isDraggingAny)
         {
             animator.SetBool("Hover", true);
