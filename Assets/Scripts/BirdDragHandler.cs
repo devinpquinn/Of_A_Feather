@@ -9,7 +9,7 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
 
-    private float pairingDistance = 1.0f;
+    private float pairingDistance = 1.25f;
 
     private float topBufferDistance = 2.0f;
     private float bottomBufferDistance = 0.33f;
