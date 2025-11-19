@@ -305,7 +305,7 @@ GameObject:
   - component: {fileID: 8135248851247538497}
   - component: {fileID: 3196429514757646833}
   - component: {fileID: 7490156472225559571}
-  - component: {fileID: 7332197506585057839}
+  - component: {fileID: 791302193681298720}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Untagged
@@ -391,8 +391,8 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!60 &7332197506585057839
-PolygonCollider2D:
+--- !u!61 &791302193681298720
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -425,34 +425,18 @@ PolygonCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.3219274, y: 0.95959806}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.05}
-    oldSize: {x: 1.6666666, y: 1.6666666}
-    newSize: {x: 1.25, y: 1.25}
-    adaptiveTilingThreshold: 0.5
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -0.5924263, y: 1.0781773}
-      - {x: -0.66969764, y: 0.91379905}
-      - {x: -0.67136425, y: 0.8307864}
-      - {x: -0.58800346, y: 0.3309098}
-      - {x: -0.33483925, y: 0.0015459768}
-      - {x: 0.16901803, y: 0.0009845197}
-      - {x: 0.58917034, y: 0.0815708}
-      - {x: 0.6701247, y: 0.16659094}
-      - {x: 0.6703459, y: 0.25127304}
-      - {x: 0.08459314, y: 0.83804214}
-      - {x: 0.003169313, y: 1.2483518}
-      - {x: -0.083778225, y: 1.4169457}
-      - {x: -0.16676943, y: 1.5025203}
-      - {x: -0.2470474, y: 1.5030309}
-      - {x: -0.5040935, y: 1.2529526}
-  m_UseDelaunayMesh: 0
+  m_Size: {x: 0.80614525, y: 1.0808039}
+  m_EdgeRadius: 0
 --- !u!1 &3049751468136931473
 GameObject:
   m_ObjectHideFlags: 0
