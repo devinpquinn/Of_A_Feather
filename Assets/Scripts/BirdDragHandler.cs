@@ -246,7 +246,7 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (animator != null)
         {
-            animator.Play("Bird_Nudge", 0, 0f);
+            animator.Play("Bird_Celebrate", 0, 0f);
         }
     }
 
