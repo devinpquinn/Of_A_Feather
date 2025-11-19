@@ -11,12 +11,17 @@ public class BirdGameManager : MonoBehaviour
     private float minSpawnY = -4.6f;
     private float maxSpawnY = 3f;
     
+    private float minBirdDistance = 1.5f; // Minimum distance between birds at spawn
+    private int maxSpawnAttempts = 50; // Maximum attempts to find a valid spawn position
+    
     public int numPairsToSpawn = 5; //the number of pairs of birds to spawn; each pair consists of two birds that do not share any of the same color in the same body part
     
     private int birdCounter = 1;
     private int currentPairCount = 0;
     
     public bool IsRoundComplete { get; private set; } = false;
+    
+    private System.Collections.Generic.List<Vector3> spawnedPositions = new System.Collections.Generic.List<Vector3>();
     
     private void Awake()
     {
@@ -25,6 +30,7 @@ public class BirdGameManager : MonoBehaviour
     
     private void Start()
     {
+        spawnedPositions.Clear();
         SpawnBirdPairs(numPairsToSpawn);
     }
     
@@ -73,11 +79,7 @@ public class BirdGameManager : MonoBehaviour
 
     private void SpawnBirdAtRandomPosition(int crestIndex, int headIndex, int wingIndex, int bellyIndex)
     {
-        Vector3 spawnPosition = new Vector3(
-            Random.Range(minSpawnX, maxSpawnX),
-            Random.Range(minSpawnY, maxSpawnY),
-            0f
-        );
+        Vector3 spawnPosition = FindValidSpawnPosition();
 
         GameObject bird = Instantiate(birdPrefab, spawnPosition, Quaternion.identity);
         bird.name = $"Bird {birdCounter}";
@@ -88,6 +90,47 @@ public class BirdGameManager : MonoBehaviour
         {
             birdRandomizer.SetColors(crestIndex, headIndex, wingIndex, bellyIndex);
         }
+        
+        spawnedPositions.Add(spawnPosition);
+    }
+    
+    private Vector3 FindValidSpawnPosition()
+    {
+        for (int attempt = 0; attempt < maxSpawnAttempts; attempt++)
+        {
+            Vector3 candidatePosition = new Vector3(
+                Random.Range(minSpawnX, maxSpawnX),
+                Random.Range(minSpawnY, maxSpawnY),
+                0f
+            );
+            
+            bool isValidPosition = true;
+            
+            // Check distance from all previously spawned birds
+            foreach (Vector3 existingPosition in spawnedPositions)
+            {
+                float distance = IsometricDistance(candidatePosition, existingPosition);
+                if (distance < minBirdDistance)
+                {
+                    isValidPosition = false;
+                    break;
+                }
+            }
+            
+            if (isValidPosition)
+            {
+                return candidatePosition;
+            }
+        }
+        
+        // If we couldn't find a valid position after max attempts, return a random position
+        // This is a fallback to prevent infinite loops
+        Debug.LogWarning("Could not find ideal spawn position, using fallback");
+        return new Vector3(
+            Random.Range(minSpawnX, maxSpawnX),
+            Random.Range(minSpawnY, maxSpawnY),
+            0f
+        );
     }
     
     public static float IsometricDistance(Vector3 a, Vector3 b)
