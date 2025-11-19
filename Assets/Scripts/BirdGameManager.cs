@@ -198,7 +198,7 @@ public class BirdGameManager : MonoBehaviour
                 pair.Item2.PlayCelebrationNudge();
                 
                 // Wait before next pair
-                yield return new WaitForSeconds(0.2f);
+                yield return new WaitForSeconds(0.1f);
             }
         }
     }
