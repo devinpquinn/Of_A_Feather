@@ -241,6 +241,14 @@ public class BirdDragHandler : MonoBehaviour
 
         return myRandomizer.CheckMismatched(otherColors);
     }
+    
+    public void PlayCelebrationNudge()
+    {
+        if (animator != null)
+        {
+            animator.Play("Bird_Nudge", 0, 0f);
+        }
+    }
 
     private IEnumerator EstablishPairDelayed(BirdDragHandler otherBird)
     {
@@ -267,6 +275,12 @@ public class BirdDragHandler : MonoBehaviour
         if (otherBird.animator != null)
         {
             otherBird.animator.Play("Bird_Nudge", 0, 0f);
+        }
+
+        // Register pair with game manager
+        if (BirdGameManager.Instance != null)
+        {
+            BirdGameManager.Instance.RegisterPair(this, otherBird);
         }
 
         // Notify the game manager
@@ -324,6 +338,12 @@ public class BirdDragHandler : MonoBehaviour
             {
                 Destroy(currentPartner.pairLineOutline.gameObject);
                 currentPartner.pairLineOutline = null;
+            }
+
+            // Unregister pair from game manager
+            if (BirdGameManager.Instance != null)
+            {
+                BirdGameManager.Instance.UnregisterPair(this, currentPartner);
             }
 
             // Break the connection from both sides

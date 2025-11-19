@@ -21,6 +21,9 @@ public class BirdGameManager : MonoBehaviour
     
     public bool IsRoundComplete { get; private set; } = false;
     
+    // Track all paired birds for celebration
+    private System.Collections.Generic.List<System.Tuple<BirdDragHandler, BirdDragHandler>> pairedBirds = new System.Collections.Generic.List<System.Tuple<BirdDragHandler, BirdDragHandler>>();
+    
     private System.Collections.Generic.List<Vector3> spawnedPositions = new System.Collections.Generic.List<Vector3>();
     
     private void Awake()
@@ -140,6 +143,23 @@ public class BirdGameManager : MonoBehaviour
         return Mathf.Sqrt(((delta.x * 0.75f) * (delta.x * 0.75f)) + (delta.y * delta.y));
     }
     
+    public void RegisterPair(BirdDragHandler bird1, BirdDragHandler bird2)
+    {
+        var pair = new System.Tuple<BirdDragHandler, BirdDragHandler>(bird1, bird2);
+        if (!pairedBirds.Contains(pair))
+        {
+            pairedBirds.Add(pair);
+        }
+    }
+    
+    public void UnregisterPair(BirdDragHandler bird1, BirdDragHandler bird2)
+    {
+        // Remove both possible orderings of the pair
+        pairedBirds.RemoveAll(p => 
+            (p.Item1 == bird1 && p.Item2 == bird2) || 
+            (p.Item1 == bird2 && p.Item2 == bird1));
+    }
+    
     public void OnPairFormed()
     {
         currentPairCount++;
@@ -161,5 +181,25 @@ public class BirdGameManager : MonoBehaviour
     {
         IsRoundComplete = true;
         Debug.Log("🎉 Round Complete! All bird pairs have been matched!");
+        StartCoroutine(PlayCelebrationAnimation());
+    }
+    
+    private System.Collections.IEnumerator PlayCelebrationAnimation()
+    {
+        // Wait 1 second before starting celebration
+        yield return new UnityEngine.WaitForSeconds(1f);
+        
+        // Play nudge animation for each pair
+        foreach (var pair in pairedBirds)
+        {
+            if (pair.Item1 != null && pair.Item2 != null)
+            {
+                pair.Item1.PlayCelebrationNudge();
+                pair.Item2.PlayCelebrationNudge();
+                
+                // Wait 0.5 seconds before next pair
+                yield return new UnityEngine.WaitForSeconds(0.5f);
+            }
+        }
     }
 }
