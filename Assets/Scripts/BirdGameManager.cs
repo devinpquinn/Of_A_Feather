@@ -186,8 +186,8 @@ public class BirdGameManager : MonoBehaviour
     
     private System.Collections.IEnumerator PlayCelebrationAnimation()
     {
-        // Wait 1 second before starting celebration
-        yield return new UnityEngine.WaitForSeconds(1f);
+        // Wait before starting celebration
+        yield return new WaitForSeconds(1f);
         
         // Play nudge animation for each pair
         foreach (var pair in pairedBirds)
@@ -197,8 +197,8 @@ public class BirdGameManager : MonoBehaviour
                 pair.Item1.PlayCelebrationNudge();
                 pair.Item2.PlayCelebrationNudge();
                 
-                // Wait 0.5 seconds before next pair
-                yield return new UnityEngine.WaitForSeconds(0.5f);
+                // Wait before next pair
+                yield return new WaitForSeconds(0.2f);
             }
         }
     }
