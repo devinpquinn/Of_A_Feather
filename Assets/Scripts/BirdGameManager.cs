@@ -202,10 +202,14 @@ public class BirdGameManager : MonoBehaviour
             if (pair.Item1 != null && pair.Item2 != null)
             {
                 pair.Item1.PlayCelebrationNudge();
+                
+                float waitBetween = 0.05f;
+                yield return new WaitForSeconds(waitBetween);
+
                 pair.Item2.PlayCelebrationNudge();
                 
                 // Wait before next pair
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.1f + waitBetween);
             }
         }
     }
