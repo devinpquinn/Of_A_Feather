@@ -375,7 +375,7 @@ public class BirdDragHandler : MonoBehaviour
         pairLineOutline.material = new Material(Shader.Find("Sprites/Default"));
         pairLineOutline.startColor = Color.black;
         pairLineOutline.endColor = Color.black;
-        pairLineOutline.sortingOrder = -3;
+        pairLineOutline.sortingOrder = -4;
         
         pairLineOutline.SetPosition(0, transform.position);
         pairLineOutline.SetPosition(1, otherBird.transform.position);
@@ -391,7 +391,7 @@ public class BirdDragHandler : MonoBehaviour
         pairLineRenderer.material = new Material(Shader.Find("Sprites/Default"));
         pairLineRenderer.startColor = connectionColor;
         pairLineRenderer.endColor = connectionColor;
-        pairLineRenderer.sortingOrder = -1;
+        pairLineRenderer.sortingOrder = -2;
         
         // Set positions
         pairLineRenderer.SetPosition(0, transform.position);
