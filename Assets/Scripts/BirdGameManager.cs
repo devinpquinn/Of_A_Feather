@@ -188,7 +188,7 @@ public class BirdGameManager : MonoBehaviour
     
     private System.Collections.IEnumerator PlayCelebrationAnimation()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
     
         // Show victory screen
         victoryScreen.SetActive(true);
