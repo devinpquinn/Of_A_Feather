@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class BirdRandomizer : MonoBehaviour
 {
@@ -100,5 +102,83 @@ public class BirdRandomizer : MonoBehaviour
         
         if (bellyRenderer != null)
             bellyRenderer.color = colorPalette[BellyColorIndex];
+    }
+    
+    public void FlashMatchingParts(int[] partnerColors)
+    {
+        List<int> matchingParts = new List<int>();
+        
+        if (CrestColorIndex == partnerColors[0])
+            matchingParts.Add(0);
+        if (HeadColorIndex == partnerColors[1])
+            matchingParts.Add(1);
+        if (WingColorIndex == partnerColors[2])
+            matchingParts.Add(2);
+        if (BellyColorIndex == partnerColors[3])
+            matchingParts.Add(3);
+        
+        if (matchingParts.Count > 0)
+        {
+            StartCoroutine(FlashPartsCoroutine(matchingParts));
+        }
+    }
+    
+    private IEnumerator FlashPartsCoroutine(List<int> partIndices)
+    {
+        // Store original colors
+        Dictionary<int, Color> originalColors = new Dictionary<int, Color>();
+        
+        foreach (int partIndex in partIndices)
+        {
+            SpriteRenderer renderer = GetRendererForPart(partIndex);
+            if (renderer != null)
+            {
+                originalColors[partIndex] = renderer.color;
+                renderer.color = Color.white;
+            }
+        }
+        
+        // Lerp back to original colors over 0.5 seconds
+        float duration = 0.5f;
+        float elapsed = 0f;
+        
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / duration;
+            
+            foreach (int partIndex in partIndices)
+            {
+                SpriteRenderer renderer = GetRendererForPart(partIndex);
+                if (renderer != null && originalColors.ContainsKey(partIndex))
+                {
+                    renderer.color = Color.Lerp(Color.white, originalColors[partIndex], t);
+                }
+            }
+            
+            yield return null;
+        }
+        
+        // Ensure final colors are set correctly
+        foreach (int partIndex in partIndices)
+        {
+            SpriteRenderer renderer = GetRendererForPart(partIndex);
+            if (renderer != null && originalColors.ContainsKey(partIndex))
+            {
+                renderer.color = originalColors[partIndex];
+            }
+        }
+    }
+    
+    private SpriteRenderer GetRendererForPart(int partIndex)
+    {
+        switch (partIndex)
+        {
+            case 0: return crestRenderer;
+            case 1: return headRenderer;
+            case 2: return wingRenderer;
+            case 3: return bellyRenderer;
+            default: return null;
+        }
     }
 }

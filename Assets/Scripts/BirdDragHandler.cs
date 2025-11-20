@@ -163,12 +163,21 @@ public class BirdDragHandler : MonoBehaviour
         BirdDragHandler[] allBirds = FindObjectsByType<BirdDragHandler>(FindObjectsSortMode.None);
         BirdDragHandler closestValidBird = null;
         float closestDistance = float.MaxValue;
+        BirdDragHandler closestBirdWithinRange = null;
+        float closestBirdDistance = float.MaxValue;
 
         foreach (BirdDragHandler otherBird in allBirds)
         {
             if (otherBird == this) continue;
 
             float distance = BirdGameManager.IsometricDistance(transform.position, otherBird.transform.position);
+
+            // Track the closest bird within pairing distance (regardless of color match)
+            if (distance <= pairingDistance && distance < closestBirdDistance)
+            {
+                closestBirdWithinRange = otherBird;
+                closestBirdDistance = distance;
+            }
 
             // Check if within pairing distance
             if (distance <= pairingDistance)
@@ -203,6 +212,11 @@ public class BirdDragHandler : MonoBehaviour
             {
                 StartCoroutine(EstablishPairDelayed(closestValidBird));
             }
+        }
+        // If no valid bird was found but there's a bird within range, flash matching parts
+        else if (closestBirdWithinRange != null)
+        {
+            FlashMatchingPartsWithBird(closestBirdWithinRange);
         }
     }
 
@@ -240,6 +254,23 @@ public class BirdDragHandler : MonoBehaviour
         int[] otherColors = otherRandomizer.GetColors();
 
         return myRandomizer.CheckMismatched(otherColors);
+    }
+    
+    private void FlashMatchingPartsWithBird(BirdDragHandler otherBird)
+    {
+        BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
+        BirdRandomizer otherRandomizer = otherBird.GetComponent<BirdRandomizer>();
+
+        if (myRandomizer == null || otherRandomizer == null)
+        {
+            return;
+        }
+
+        int[] otherColors = otherRandomizer.GetColors();
+        
+        // Flash matching parts on both birds
+        myRandomizer.FlashMatchingParts(otherColors);
+        otherRandomizer.FlashMatchingParts(myRandomizer.GetColors());
     }
     
     public void PlayCelebrationNudge()
