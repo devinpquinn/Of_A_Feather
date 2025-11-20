@@ -150,6 +150,9 @@ public class BirdRandomizer : MonoBehaviour
             }
         }
         
+        // Hold white for 0.1 seconds
+        yield return new WaitForSeconds(0.1f);
+        
         // Lerp back to original colors over 0.5 seconds
         float duration = 0.5f;
         float elapsed = 0f;
