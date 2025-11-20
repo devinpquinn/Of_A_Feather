@@ -344,7 +344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BirdRandomizer
   colorPalette:
-  - {r: 0.16078432, g: 0.41960785, b: 0.6666667, a: 1}
+  - {r: 0.18039216, g: 0.3764706, b: 0.8352941, a: 1}
   - {r: 0.011764706, g: 0.6509804, b: 0.41960785, a: 1}
   - {r: 0.9529412, g: 0.6745098, b: 0, a: 1}
   - {r: 0.78431374, g: 0.09803922, b: 0.13333334, a: 1}
