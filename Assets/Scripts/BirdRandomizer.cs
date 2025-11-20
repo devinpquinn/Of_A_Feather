@@ -25,6 +25,9 @@ public class BirdRandomizer : MonoBehaviour
     [HideInInspector] public int WingColorIndex { get; private set; }
     [HideInInspector] public int BellyColorIndex { get; private set; }
     
+    // Store original colors for each body part to handle rapid flashing edge cases
+    private Dictionary<int, Color> originalPartColors = new Dictionary<int, Color>();
+    
     public int[] GetColors()
     {
         return new int[] { CrestColorIndex, HeadColorIndex, WingColorIndex, BellyColorIndex };
@@ -37,22 +40,34 @@ public class BirdRandomizer : MonoBehaviour
             case 0:
                 CrestColorIndex = colorIndex;
                 if (crestRenderer != null)
+                {
                     crestRenderer.color = colorPalette[colorIndex];
+                    originalPartColors[0] = colorPalette[colorIndex];
+                }
                 break;
             case 1:
                 HeadColorIndex = colorIndex;
                 if (headRenderer != null)
+                {
                     headRenderer.color = colorPalette[colorIndex];
+                    originalPartColors[1] = colorPalette[colorIndex];
+                }
                 break;
             case 2:
                 WingColorIndex = colorIndex;
                 if (wingRenderer != null)
+                {
                     wingRenderer.color = colorPalette[colorIndex];
+                    originalPartColors[2] = colorPalette[colorIndex];
+                }
                 break;
             case 3:
                 BellyColorIndex = colorIndex;
                 if (bellyRenderer != null)
+                {
                     bellyRenderer.color = colorPalette[colorIndex];
+                    originalPartColors[3] = colorPalette[colorIndex];
+                }
                 break;
             default:
                 Debug.LogError("Invalid body part index!");
@@ -125,15 +140,12 @@ public class BirdRandomizer : MonoBehaviour
     
     private IEnumerator FlashPartsCoroutine(List<int> partIndices)
     {
-        // Store original colors
-        Dictionary<int, Color> originalColors = new Dictionary<int, Color>();
-        
+        // Set to white immediately
         foreach (int partIndex in partIndices)
         {
             SpriteRenderer renderer = GetRendererForPart(partIndex);
             if (renderer != null)
             {
-                originalColors[partIndex] = renderer.color;
                 renderer.color = Color.white;
             }
         }
@@ -150,22 +162,22 @@ public class BirdRandomizer : MonoBehaviour
             foreach (int partIndex in partIndices)
             {
                 SpriteRenderer renderer = GetRendererForPart(partIndex);
-                if (renderer != null && originalColors.ContainsKey(partIndex))
+                if (renderer != null && originalPartColors.ContainsKey(partIndex))
                 {
-                    renderer.color = Color.Lerp(Color.white, originalColors[partIndex], t);
+                    renderer.color = Color.Lerp(Color.white, originalPartColors[partIndex], t);
                 }
             }
             
             yield return null;
         }
         
-        // Ensure final colors are set correctly
+        // Ensure final colors are set correctly to the original stored colors
         foreach (int partIndex in partIndices)
         {
             SpriteRenderer renderer = GetRendererForPart(partIndex);
-            if (renderer != null && originalColors.ContainsKey(partIndex))
+            if (renderer != null && originalPartColors.ContainsKey(partIndex))
             {
-                renderer.color = originalColors[partIndex];
+                renderer.color = originalPartColors[partIndex];
             }
         }
     }
