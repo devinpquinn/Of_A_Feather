@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class BirdGameManager : MonoBehaviour
 {
@@ -20,11 +21,12 @@ public class BirdGameManager : MonoBehaviour
     private int currentPairCount = 0;
     
     public bool IsRoundComplete { get; private set; } = false;
+    public GameObject victoryScreen;
     
     // Track all paired birds for celebration
-    private System.Collections.Generic.List<System.Tuple<BirdDragHandler, BirdDragHandler>> pairedBirds = new System.Collections.Generic.List<System.Tuple<BirdDragHandler, BirdDragHandler>>();
+    private List<System.Tuple<BirdDragHandler, BirdDragHandler>> pairedBirds = new List<System.Tuple<BirdDragHandler, BirdDragHandler>>();
     
-    private System.Collections.Generic.List<Vector3> spawnedPositions = new System.Collections.Generic.List<Vector3>();
+    private List<Vector3> spawnedPositions = new List<Vector3>();
     
     private void Awake()
     {
@@ -186,6 +188,11 @@ public class BirdGameManager : MonoBehaviour
     
     private System.Collections.IEnumerator PlayCelebrationAnimation()
     {
+        yield return new WaitForSeconds(0.5f);
+    
+        // Show victory screen
+        victoryScreen.SetActive(true);
+        
         // Wait before starting celebration
         yield return new WaitForSeconds(1f);
         
