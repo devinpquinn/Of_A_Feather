@@ -27,10 +27,14 @@ public class BirdDragHandler : MonoBehaviour
     private SortingGroup sortingGroup;
     private string originalSortingLayer;
     private Animator animator;
+    private Animator cameraAnimator;
+    private bool animateCamera = true;
 
     private void Start()
     {
         mainCamera = Camera.main;
+        cameraAnimator = mainCamera.GetComponent<Animator>();
+        
         sortingGroup = GetComponentInChildren<SortingGroup>();
         animator = GetComponent<Animator>();
 
@@ -306,6 +310,12 @@ public class BirdDragHandler : MonoBehaviour
         if (otherBird.animator != null)
         {
             otherBird.animator.Play("Bird_Nudge", 0, 0f);
+        }
+        
+        // Play camera bump animation
+        if(animateCamera && cameraAnimator != null)
+        {
+            cameraAnimator.SetTrigger("BumpDown");
         }
 
         // Register pair with game manager
