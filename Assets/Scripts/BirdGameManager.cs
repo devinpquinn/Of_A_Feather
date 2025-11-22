@@ -165,7 +165,7 @@ public class BirdGameManager : MonoBehaviour
     public void OnPairFormed()
     {
         currentPairCount++;
-        Debug.Log($"Pair formed! Current pairs: {currentPairCount}/{numPairsToSpawn}");
+        //Debug.Log($"Pair formed! Current pairs: {currentPairCount}/{numPairsToSpawn}");
         
         if (currentPairCount >= numPairsToSpawn)
         {
@@ -176,13 +176,13 @@ public class BirdGameManager : MonoBehaviour
     public void OnPairBroken()
     {
         currentPairCount--;
-        Debug.Log($"Pair broken. Current pairs: {currentPairCount}/{numPairsToSpawn}");
+        //Debug.Log($"Pair broken. Current pairs: {currentPairCount}/{numPairsToSpawn}");
     }
     
     private void OnRoundComplete()
     {
         IsRoundComplete = true;
-        Debug.Log("🎉 Round Complete! All bird pairs have been matched!");
+        //Debug.Log("Round Complete! All bird pairs have been matched!");
         StartCoroutine(PlayCelebrationAnimation());
     }
     
@@ -190,7 +190,7 @@ public class BirdGameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.25f);
     
-        // Show victory screen
+        // Show victory flash effect
         victoryScreen.SetActive(true);
         
         // Wait before starting celebration
@@ -215,6 +215,7 @@ public class BirdGameManager : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
         
+        // Play victory screen animation
         victoryScreen.GetComponent<Animator>().Play("VictoryScreen_Banner", 0, 0f);
     }
 }

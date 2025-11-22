@@ -330,14 +330,14 @@ public class BirdDragHandler : MonoBehaviour
             BirdGameManager.Instance.OnPairFormed();
         }
 
-        Debug.Log($"Paired {gameObject.name} with {otherBird.gameObject.name}");
+        //Debug.Log($"Paired {gameObject.name} with {otherBird.gameObject.name}");
     }
 
     private void BreakPair()
     {
         if (currentPartner != null)
         {
-            Debug.Log($"Breaking pair between {gameObject.name} and {currentPartner.gameObject.name}");
+            //Debug.Log($"Breaking pair between {gameObject.name} and {currentPartner.gameObject.name}");
 
             // Disable pedestals for both birds
             BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
