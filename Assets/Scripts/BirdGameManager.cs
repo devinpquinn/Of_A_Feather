@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class BirdGameManager : MonoBehaviour
@@ -186,7 +187,7 @@ public class BirdGameManager : MonoBehaviour
         StartCoroutine(PlayCelebrationAnimation());
     }
     
-    private System.Collections.IEnumerator PlayCelebrationAnimation()
+    private IEnumerator PlayCelebrationAnimation()
     {
         yield return new WaitForSeconds(0.25f);
     
