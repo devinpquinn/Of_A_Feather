@@ -212,5 +212,9 @@ public class BirdGameManager : MonoBehaviour
                 yield return new WaitForSeconds(0.05f + waitBetween);
             }
         }
+        
+        yield return new WaitForSeconds(0.5f);
+        
+        victoryScreen.GetComponent<Animator>().Play("VictoryScreen_Banner", 0, 0f);
     }
 }
