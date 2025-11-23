@@ -89,6 +89,10 @@ public class BirdDragHandler : MonoBehaviour
 
     private void OnMouseUp()
     {
+        // Disable mouse up if round is complete
+        if (BirdGameManager.Instance != null && BirdGameManager.Instance.IsRoundComplete)
+            return;
+    
         isDragging = false;
         isDraggingAny = false;
 
