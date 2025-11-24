@@ -752,7 +752,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 677484046}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786419500}
+        m_TargetAssemblyTypeName: BirdGameManager, Assembly-CSharp
+        m_MethodName: PlayAgainHarder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &677484046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,7 +972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BirdGameManager
   birdPrefab: {fileID: 1993512181723143536, guid: 726e850d2050a164f8d6c6434ce5c17f, type: 3}
-  numPairsToSpawn: 3
+  numPairsToSpawn: 2
   victoryScreen: {fileID: 747757172}
 --- !u!4 &786419501
 Transform:
@@ -1257,7 +1269,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1365328525}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786419500}
+        m_TargetAssemblyTypeName: BirdGameManager, Assembly-CSharp
+        m_MethodName: PlayAgainEasier
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1365328525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2409,7 +2433,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 268711069018020418}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 786419500}
+        m_TargetAssemblyTypeName: BirdGameManager, Assembly-CSharp
+        m_MethodName: PlayAgainSameDifficulty
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9027767350520502667
 GameObject:
   m_ObjectHideFlags: 0

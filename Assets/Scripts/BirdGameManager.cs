@@ -219,4 +219,55 @@ public class BirdGameManager : MonoBehaviour
         // Play victory screen animation
         victoryScreen.GetComponent<Animator>().Play("VictoryScreen_Banner", 0, 0f);
     }
+    
+    // Public methods for victory screen buttons
+    public void PlayAgainEasier()
+    {
+        numPairsToSpawn = Mathf.Max(1, numPairsToSpawn - 1);
+        ResetLevel();
+    }
+    
+    public void PlayAgainSameDifficulty()
+    {
+        ResetLevel();
+    }
+    
+    public void PlayAgainHarder()
+    {
+        numPairsToSpawn++;
+        ResetLevel();
+    }
+    
+    private void ResetLevel()
+    {
+        // Hide victory screen
+        if (victoryScreen != null)
+        {
+            victoryScreen.SetActive(false);
+        }
+        
+        // Destroy all pair lines first
+        LineRenderer[] allLines = FindObjectsByType<LineRenderer>(FindObjectsSortMode.None);
+        foreach (LineRenderer line in allLines)
+        {
+            Destroy(line.gameObject);
+        }
+        
+        // Destroy all existing birds
+        BirdDragHandler[] allBirds = FindObjectsByType<BirdDragHandler>(FindObjectsSortMode.None);
+        foreach (BirdDragHandler bird in allBirds)
+        {
+            Destroy(bird.gameObject);
+        }
+        
+        // Reset all game state
+        birdCounter = 1;
+        currentPairCount = 0;
+        IsRoundComplete = false;
+        pairedBirds.Clear();
+        spawnedPositions.Clear();
+        
+        // Spawn new birds
+        SpawnBirdPairs(numPairsToSpawn);
+    }
 }
