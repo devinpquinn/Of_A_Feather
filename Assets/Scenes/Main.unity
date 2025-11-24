@@ -687,7 +687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &677484042
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1007,7 +1007,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1250665649
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1204,7 +1204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1365328521
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1617,7 +1617,6 @@ GameObject:
   - component: {fileID: 1728317639}
   - component: {fileID: 1728317641}
   - component: {fileID: 1728317640}
-  - component: {fileID: 1728317642}
   m_Layer: 5
   m_Name: VictoryBanner
   m_TagString: Untagged
@@ -1685,18 +1684,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1728317638}
   m_CullTransparentMesh: 1
---- !u!225 &1728317642
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1728317638}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &1802865515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2242,7 +2229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2454325464006153527
 RectTransform:
   m_ObjectHideFlags: 0
