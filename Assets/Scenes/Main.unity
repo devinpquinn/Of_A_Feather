@@ -1068,7 +1068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BirdGameManager
   birdPrefab: {fileID: 1993512181723143536, guid: 726e850d2050a164f8d6c6434ce5c17f, type: 3}
-  numPairsToSpawn: 2
+  numPairsToSpawn: 1
   victoryScreen: {fileID: 747757172}
 --- !u!4 &786419501
 Transform:
