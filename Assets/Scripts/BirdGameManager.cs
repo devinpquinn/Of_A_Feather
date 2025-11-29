@@ -245,9 +245,7 @@ public class BirdGameManager : MonoBehaviour
         // Hide victory screen
         victoryScreen.GetComponent<Animator>().Play("VictoryScreen_Reset", 0, 0f);
         
-        yield return new WaitForSeconds(1f);
-        
-        victoryScreen.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
         
         // Destroy all pair lines first
         LineRenderer[] allLines = FindObjectsByType<LineRenderer>(FindObjectsSortMode.None);
@@ -272,5 +270,9 @@ public class BirdGameManager : MonoBehaviour
         
         // Spawn new birds
         SpawnBirdPairs(numPairsToSpawn);
+        
+        yield return new WaitForSeconds(0.5f);
+        
+        victoryScreen.SetActive(false);
     }
 }
