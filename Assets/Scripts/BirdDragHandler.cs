@@ -10,7 +10,7 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D grabbedCursor;
 
     [Header("Visual Feedback")]
-    [SerializeField] private Animator outline;
+    public Animator outline;
 
     private float pairingDistance = 1.25f;
 
@@ -478,7 +478,14 @@ public class BirdDragHandler : MonoBehaviour
             
             if (partnerRandomizer != null && partnerRandomizer.pedestal != null)
             {
-                partnerRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_Out", 0, 0f);
+                partnerRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_Inactive", 0, 0f);
+            }
+            
+            // Set partner's outline to the end of BirdOutline_In animation
+            if (currentPartner.outline != null)
+            {
+                currentPartner.outline.Play("BirdOutline_In", 0, 1f);
+                currentPartner.outline.SetBool("IsActive", false);
             }
 
             // Destroy line renderer if it exists
