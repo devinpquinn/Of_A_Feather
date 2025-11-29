@@ -270,6 +270,7 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (bird.outline != null)
         {
+            bird.gameObject.GetComponent<Animator>()?.SetTrigger("Wiggle");
             bird.outline.SetBool("IsActive", true);
             currentlyHighlightedBird = bird;
         }
