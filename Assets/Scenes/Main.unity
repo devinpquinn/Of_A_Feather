@@ -913,7 +913,7 @@ GameObject:
   - component: {fileID: 747337498}
   - component: {fileID: 747337497}
   m_Layer: 5
-  m_Name: Fade
+  m_Name: Black
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -951,7 +951,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.64705884, g: 0.427451, b: 0.65882355, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1005,8 +1005,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 747337496}
   - {fileID: 1728317639}
+  - {fileID: 747337496}
   - {fileID: 2146559789}
   - {fileID: 902913295}
   m_Father: {fileID: 582926339}
