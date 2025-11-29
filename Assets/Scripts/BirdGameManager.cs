@@ -224,27 +224,30 @@ public class BirdGameManager : MonoBehaviour
     public void PlayAgainEasier()
     {
         numPairsToSpawn = Mathf.Max(1, numPairsToSpawn - 1);
-        ResetLevel();
+        StartCoroutine(ResetLevel());
     }
     
     public void PlayAgainSameDifficulty()
     {
-        ResetLevel();
+        StartCoroutine(ResetLevel());
     }
     
     public void PlayAgainHarder()
     {
         numPairsToSpawn++;
-        ResetLevel();
+        StartCoroutine(ResetLevel());
     }
     
-    private void ResetLevel()
+    private IEnumerator ResetLevel()
     {
+        yield return new WaitForSeconds(0.075f);
+    
         // Hide victory screen
-        if (victoryScreen != null)
-        {
-            victoryScreen.SetActive(false);
-        }
+        victoryScreen.GetComponent<Animator>().Play("VictoryScreen_Reset", 0, 0f);
+        
+        yield return new WaitForSeconds(1f);
+        
+        victoryScreen.SetActive(false);
         
         // Destroy all pair lines first
         LineRenderer[] allLines = FindObjectsByType<LineRenderer>(FindObjectsSortMode.None);
