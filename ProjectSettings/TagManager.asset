@@ -44,5 +44,8 @@ TagManager:
   - name: Hovering
     uniqueID: 2777510293
     locked: 0
+  - name: Overlay
+    uniqueID: 2719235319
+    locked: 0
   m_RenderingLayers:
   - Default

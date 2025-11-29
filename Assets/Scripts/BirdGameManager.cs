@@ -1,12 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class BirdGameManager : MonoBehaviour
 {
     public static BirdGameManager Instance { get; private set; }
 
     public GameObject birdPrefab;
+    public TextMeshProUGUI levelText;
     
     private float minSpawnX = -7.8f;
     private float maxSpawnX = 7.8f;
@@ -37,6 +39,7 @@ public class BirdGameManager : MonoBehaviour
     private void Start()
     {
         spawnedPositions.Clear();
+        UpdateLevelText();
         SpawnBirdPairs(numPairsToSpawn);
     }
     
@@ -267,11 +270,19 @@ public class BirdGameManager : MonoBehaviour
         pairedBirds.Clear();
         spawnedPositions.Clear();
         
-        // Spawn new birds
+        // Update level text and spawn new birds
+        UpdateLevelText();
         SpawnBirdPairs(numPairsToSpawn);
-        
         yield return new WaitForSeconds(0.5f);
         
         victoryScreen.SetActive(false);
+    }
+    
+    private void UpdateLevelText()
+    {
+        if (levelText != null)
+        {
+            levelText.text = numPairsToSpawn.ToString();
+        }
     }
 }
