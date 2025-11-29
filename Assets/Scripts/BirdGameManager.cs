@@ -192,6 +192,8 @@ public class BirdGameManager : MonoBehaviour
     
     private IEnumerator PlayCelebrationAnimation()
     {
+        levelText.GetComponent<Animator>().Play("LevelText_Out", 0, 0f);
+    
         yield return new WaitForSeconds(0.25f);
     
         // Show victory flash effect
@@ -284,5 +286,7 @@ public class BirdGameManager : MonoBehaviour
         {
             levelText.text = "lvl. " + numPairsToSpawn.ToString();
         }
+        
+        levelText.GetComponent<Animator>().Play("LevelText_In", 0, 0f);
     }
 }
