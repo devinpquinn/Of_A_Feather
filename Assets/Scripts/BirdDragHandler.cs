@@ -9,6 +9,9 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
 
+    [Header("Visual Feedback")]
+    [SerializeField] private GameObject outline;
+
     private float pairingDistance = 1.25f;
 
     private float topBufferDistance = 2.0f;
@@ -20,6 +23,8 @@ public class BirdDragHandler : MonoBehaviour
     private BirdDragHandler currentPartner = null;
     private LineRenderer pairLineRenderer = null;
     private LineRenderer pairLineOutline = null;
+    
+    private static BirdDragHandler currentlyHighlightedBird = null;
 
     private Camera mainCamera;
     private bool isDragging = false;
@@ -46,6 +51,12 @@ public class BirdDragHandler : MonoBehaviour
         if (defaultCursor != null)
         {
             Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+        }
+        
+        // Hide outline initially
+        if (outline != null)
+        {
+            outline.SetActive(false);
         }
     }
 
@@ -78,6 +89,14 @@ public class BirdDragHandler : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (isDragging)
+        {
+            UpdatePairingPreview();
+        }
+    }
+
     private void OnMouseDrag()
     {
         if (isDragging)
@@ -95,6 +114,9 @@ public class BirdDragHandler : MonoBehaviour
     
         isDragging = false;
         isDraggingAny = false;
+        
+        // Clear any highlighted bird
+        ClearHighlightedBird();
 
         // Check for nearby birds to pair with
         CheckForPairing();
@@ -164,6 +186,102 @@ public class BirdDragHandler : MonoBehaviour
         float clampedY = Mathf.Clamp(position.y, bottomLeft.y + bottomBufferDistance, topRight.y - topBufferDistance);
 
         return new Vector3(clampedX, clampedY, position.z);
+    }
+    
+    private void UpdatePairingPreview()
+    {
+        BirdDragHandler targetBird = FindPotentialPairingTarget();
+        
+        if (targetBird != currentlyHighlightedBird)
+        {
+            // Clear previous highlight
+            ClearHighlightedBird();
+            
+            // Set new highlight
+            if (targetBird != null)
+            {
+                HighlightBird(targetBird);
+            }
+        }
+    }
+    
+    private BirdDragHandler FindPotentialPairingTarget()
+    {
+        BirdDragHandler[] allBirds = FindObjectsByType<BirdDragHandler>(FindObjectsSortMode.None);
+        BirdDragHandler closestValidBird = null;
+        BirdDragHandler closestAnyBird = null;
+        float closestValidDistance = float.MaxValue;
+        float closestAnyDistance = float.MaxValue;
+
+        foreach (BirdDragHandler otherBird in allBirds)
+        {
+            if (otherBird == this) continue;
+
+            float distance = BirdGameManager.IsometricDistance(transform.position, otherBird.transform.position);
+
+            // Check if within pairing distance
+            if (distance <= pairingDistance)
+            {
+                // Track the closest bird regardless of validity
+                if (distance < closestAnyDistance)
+                {
+                    closestAnyDistance = distance;
+                    closestAnyBird = otherBird;
+                }
+                
+                // If the other bird has a partner, this bird must be closer than the current partner
+                if (otherBird.currentPartner != null)
+                {
+                    float partnerDistance = BirdGameManager.IsometricDistance(otherBird.transform.position, otherBird.currentPartner.transform.position);
+                    if (distance >= partnerDistance)
+                    {
+                        continue; // Not close enough to steal the partner
+                    }
+                }
+
+                // Check if colors are mismatched
+                if (AreColorsMismatched(otherBird))
+                {
+                    if (distance < closestValidDistance)
+                    {
+                        closestValidDistance = distance;
+                        closestValidBird = otherBird;
+                    }
+                }
+            }
+        }
+        
+        // Prefer valid bird if one exists and is the closest overall
+        if (closestValidBird != null && IsClosestBird(closestValidBird, allBirds))
+        {
+            return closestValidBird;
+        }
+        
+        // Otherwise, return the closest bird within range (even if invalid)
+        if (closestAnyBird != null && IsClosestBird(closestAnyBird, allBirds))
+        {
+            return closestAnyBird;
+        }
+        
+        return null;
+    }
+    
+    private void HighlightBird(BirdDragHandler bird)
+    {
+        if (bird.outline != null)
+        {
+            bird.outline.SetActive(true);
+            currentlyHighlightedBird = bird;
+        }
+    }
+    
+    private void ClearHighlightedBird()
+    {
+        if (currentlyHighlightedBird != null && currentlyHighlightedBird.outline != null)
+        {
+            currentlyHighlightedBird.outline.SetActive(false);
+            currentlyHighlightedBird = null;
+        }
     }
 
     private void CheckForPairing()

@@ -369,6 +369,7 @@ MonoBehaviour:
   defaultCursor: {fileID: 2800000, guid: da0fc62db904dfc498eb8203e458eea0, type: 3}
   hoverCursor: {fileID: 2800000, guid: ba01a5707fdcd0945b37cf0ae9403553, type: 3}
   grabbedCursor: {fileID: 2800000, guid: 64075b032218a9b499e95eef81ff9229, type: 3}
+  outline: {fileID: 2150040500017898081}
 --- !u!95 &7490156472225559571
 Animator:
   serializedVersion: 7
@@ -453,7 +454,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7292421700075879838
 Transform:
   m_ObjectHideFlags: 0
@@ -517,7 +518,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 7548ea5cb14038740ac5e82ea04e2725, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
