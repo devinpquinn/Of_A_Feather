@@ -434,6 +434,12 @@ public class BirdDragHandler : MonoBehaviour
             otherBird.animator.Play("Bird_Nudge", 0, 0f);
         }
         
+        // Hide the outline on the paired bird with animation
+        if (otherBird.outline != null)
+        {
+            otherBird.outline.Play("BirdOutline_Hidden", 0, 0f);
+        }
+        
         // Play camera bump animation
         if(animateCamera && cameraAnimator != null)
         {
