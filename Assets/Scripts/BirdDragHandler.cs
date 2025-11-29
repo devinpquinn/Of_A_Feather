@@ -10,7 +10,7 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D grabbedCursor;
 
     [Header("Visual Feedback")]
-    [SerializeField] private GameObject outline;
+    [SerializeField] private Animator outline;
 
     private float pairingDistance = 1.25f;
 
@@ -56,7 +56,7 @@ public class BirdDragHandler : MonoBehaviour
         // Hide outline initially
         if (outline != null)
         {
-            outline.SetActive(false);
+            outline.SetBool("IsActive", false);
         }
     }
 
@@ -270,7 +270,7 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (bird.outline != null)
         {
-            bird.outline.SetActive(true);
+            bird.outline.SetBool("IsActive", true);
             currentlyHighlightedBird = bird;
         }
     }
@@ -279,7 +279,7 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (currentlyHighlightedBird != null && currentlyHighlightedBird.outline != null)
         {
-            currentlyHighlightedBird.outline.SetActive(false);
+            currentlyHighlightedBird.outline.SetBool("IsActive", false);
             currentlyHighlightedBird = null;
         }
     }
