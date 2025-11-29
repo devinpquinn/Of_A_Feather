@@ -282,7 +282,7 @@ public class BirdGameManager : MonoBehaviour
     {
         if (levelText != null)
         {
-            levelText.text = numPairsToSpawn.ToString();
+            levelText.text = "lvl. " + numPairsToSpawn.ToString();
         }
     }
 }
