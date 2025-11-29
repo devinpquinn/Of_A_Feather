@@ -204,13 +204,12 @@ public class BirdGameManager : MonoBehaviour
             {
                 pair.Item1.PlayCelebrationNudge();
                 
-                float waitBetween = 0.05f;
-                yield return new WaitForSeconds(waitBetween);
+                yield return new WaitForSeconds(0.05f);
 
                 pair.Item2.PlayCelebrationNudge();
                 
                 // Wait before next pair
-                yield return new WaitForSeconds(0.05f + waitBetween);
+                yield return new WaitForSeconds(0.05f);
             }
         }
         
