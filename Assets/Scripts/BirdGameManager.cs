@@ -192,13 +192,10 @@ public class BirdGameManager : MonoBehaviour
     
     private IEnumerator PlayCelebrationAnimation()
     {
-        yield return new WaitForSeconds(0.25f);
-    
         // Show victory flash effect
         victoryScreen.SetActive(true);
         
-        // Wait before starting celebration
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         
         // Play nudge animation for each pair
         foreach (var pair in pairedBirds)
