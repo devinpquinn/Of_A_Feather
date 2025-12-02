@@ -29,6 +29,7 @@ public class BirdDragHandler : MonoBehaviour
     private SortingGroup sortingGroup;
     private string originalSortingLayer;
     private Animator animator;
+    public Animator pedestalAnimator;
     private Animator cameraAnimator;
     private bool animateCamera = true;
 
@@ -259,8 +260,8 @@ public class BirdDragHandler : MonoBehaviour
     
     private void HighlightBird(BirdDragHandler bird)
     {
-        bird.gameObject.GetComponent<Animator>()?.SetTrigger("Wiggle");
-        bird.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Highlighted", true);
+        bird.animator?.SetTrigger("Wiggle");
+        bird.pedestalAnimator?.SetBool("Highlighted", true);
         currentlyHighlightedBird = bird;
     }
     
@@ -268,7 +269,7 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (currentlyHighlightedBird != null)
         {
-            currentlyHighlightedBird.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Highlighted", false);
+            currentlyHighlightedBird.pedestalAnimator?.SetBool("Highlighted", false);
             currentlyHighlightedBird = null;
         }
     }
@@ -417,7 +418,7 @@ public class BirdDragHandler : MonoBehaviour
             otherBird.animator.Play("Bird_Nudge", 0, 0f);
         }
 
-        otherBird.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Paired", true);
+        otherBird.pedestalAnimator?.SetBool("Paired", true);
         
         // Play camera bump animation
         if(animateCamera && cameraAnimator != null)
@@ -447,20 +448,8 @@ public class BirdDragHandler : MonoBehaviour
             //Debug.Log($"Breaking pair between {gameObject.name} and {currentPartner.gameObject.name}");
 
             // Disable pedestals for both birds
-            BirdRandomizer myRandomizer = GetComponent<BirdRandomizer>();
-            BirdRandomizer partnerRandomizer = currentPartner.GetComponent<BirdRandomizer>();
-            
-            if (myRandomizer != null && myRandomizer.pedestal != null)
-            {
-                myRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", false);
-            }
-            
-            if (partnerRandomizer != null && partnerRandomizer.pedestal != null)
-            {
-                partnerRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", false);
-            }
-            
-            currentPartner.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Paired", false);
+            pedestalAnimator?.SetBool("Paired", false);
+            currentPartner.pedestalAnimator?.SetBool("Paired", false);
 
             // Destroy line renderer if it exists
             if (pairLineRenderer != null)
@@ -547,27 +536,8 @@ public class BirdDragHandler : MonoBehaviour
         pairLineRenderer.SetPosition(0, transform.position);
         pairLineRenderer.SetPosition(1, otherBird.transform.position);
         
-        // Enable and color pedestals for both birds
-        BirdRandomizer otherRandomizer = otherBird.GetComponent<BirdRandomizer>();
-        
-        if (myRandomizer != null && myRandomizer.pedestal != null)
-        {
-            myRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", true);
-            SpriteRenderer pedestalRenderer = myRandomizer.pedestal.GetComponent<SpriteRenderer>();
-            if (pedestalRenderer != null)
-            {
-                pedestalRenderer.color = connectionColor;
-            }
-        }
-        
-        if (otherRandomizer != null && otherRandomizer.pedestal != null)
-        {
-            otherRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", true);
-            SpriteRenderer pedestalRenderer = otherRandomizer.pedestal.GetComponent<SpriteRenderer>();
-            if (pedestalRenderer != null)
-            {
-                pedestalRenderer.color = connectionColor;
-            }
-        }
+        // Enable pedestals for both birds    
+        pedestalAnimator?.SetBool("Paired", true);
+        otherBird.pedestalAnimator?.SetBool("Paired", true);
     }
 }
