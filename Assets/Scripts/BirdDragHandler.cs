@@ -9,9 +9,6 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
 
-    [Header("Visual Feedback")]
-    public Animator outline;
-
     private float pairingDistance = 1.25f;
 
     private float topBufferDistance = 2.0f;
@@ -51,12 +48,6 @@ public class BirdDragHandler : MonoBehaviour
         if (defaultCursor != null)
         {
             Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
-        }
-        
-        // Hide outline initially
-        if (outline != null)
-        {
-            outline.SetBool("IsActive", false);
         }
     }
 
@@ -268,19 +259,16 @@ public class BirdDragHandler : MonoBehaviour
     
     private void HighlightBird(BirdDragHandler bird)
     {
-        if (bird.outline != null)
-        {
-            bird.gameObject.GetComponent<Animator>()?.SetTrigger("Wiggle");
-            bird.outline.SetBool("IsActive", true);
-            currentlyHighlightedBird = bird;
-        }
+        bird.gameObject.GetComponent<Animator>()?.SetTrigger("Wiggle");
+        bird.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Highlighted", true);
+        currentlyHighlightedBird = bird;
     }
     
     private void ClearHighlightedBird()
     {
-        if (currentlyHighlightedBird != null && currentlyHighlightedBird.outline != null)
+        if (currentlyHighlightedBird != null)
         {
-            currentlyHighlightedBird.outline.SetBool("IsActive", false);
+            currentlyHighlightedBird.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Highlighted", false);
             currentlyHighlightedBird = null;
         }
     }
@@ -337,7 +325,7 @@ public class BirdDragHandler : MonoBehaviour
             // Check if the closestValidBird is actually the closest bird overall to this bird
             if (IsClosestBird(closestValidBird, allBirds))
             {
-                StartCoroutine(EstablishPairDelayed(closestValidBird));
+                EstablishPair(closestValidBird);
             }
         }
         // If no valid bird was found but there's a bird within range, flash matching parts
@@ -408,12 +396,6 @@ public class BirdDragHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator EstablishPairDelayed(BirdDragHandler otherBird)
-    {
-        yield return new WaitForSeconds(0.0833f);
-        EstablishPair(otherBird);
-    }
-
     private void EstablishPair(BirdDragHandler otherBird)
     {
         // Break the other bird's existing pair if it has one
@@ -434,12 +416,8 @@ public class BirdDragHandler : MonoBehaviour
         {
             otherBird.animator.Play("Bird_Nudge", 0, 0f);
         }
-        
-        // Hide the outline on the paired bird with animation
-        if (otherBird.outline != null)
-        {
-            otherBird.outline.Play("BirdOutline_Hidden", 0, 0f);
-        }
+
+        otherBird.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Paired", true);
         
         // Play camera bump animation
         if(animateCamera && cameraAnimator != null)
@@ -474,20 +452,15 @@ public class BirdDragHandler : MonoBehaviour
             
             if (myRandomizer != null && myRandomizer.pedestal != null)
             {
-                myRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_Out", 0, 0f);
+                myRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", false);
             }
             
             if (partnerRandomizer != null && partnerRandomizer.pedestal != null)
             {
-                partnerRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_Inactive", 0, 0f);
+                partnerRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", false);
             }
             
-            // Set partner's outline to the end of BirdOutline_In animation
-            if (currentPartner.outline != null)
-            {
-                currentPartner.outline.Play("BirdOutline_In", 0, 1f);
-                currentPartner.outline.SetBool("IsActive", false);
-            }
+            currentPartner.gameObject.GetComponent<BirdRandomizer>()?.pedestal.GetComponent<Animator>()?.SetBool("Paired", false);
 
             // Destroy line renderer if it exists
             if (pairLineRenderer != null)
@@ -579,7 +552,7 @@ public class BirdDragHandler : MonoBehaviour
         
         if (myRandomizer != null && myRandomizer.pedestal != null)
         {
-            myRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_In", 0, 0f);
+            myRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", true);
             SpriteRenderer pedestalRenderer = myRandomizer.pedestal.GetComponent<SpriteRenderer>();
             if (pedestalRenderer != null)
             {
@@ -589,7 +562,7 @@ public class BirdDragHandler : MonoBehaviour
         
         if (otherRandomizer != null && otherRandomizer.pedestal != null)
         {
-            otherRandomizer.pedestal.GetComponent<Animator>()?.Play("Pedestal_In", 0, 0f);
+            otherRandomizer.pedestal.GetComponent<Animator>()?.SetBool("Paired", true);
             SpriteRenderer pedestalRenderer = otherRandomizer.pedestal.GetComponent<SpriteRenderer>();
             if (pedestalRenderer != null)
             {
