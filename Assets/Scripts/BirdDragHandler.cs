@@ -217,7 +217,7 @@ public class BirdDragHandler : MonoBehaviour
             animator.SetBool("Hover", false);
         }
 
-        if (defaultCursor != null && !isDragging)
+        if (defaultCursor != null && !isDraggingAny)
         {
             Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
         }
