@@ -8,6 +8,13 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private Texture2D defaultCursor;
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
+    
+    public Transform rotationParent;
+
+    [Header("Rotation Settings")]
+    [SerializeField] private float maxRotationAngle = 15f;
+    [SerializeField] private float rotationSpeed = 8f;
+    [SerializeField] private float velocitySmoothing = 0.15f;
 
     private float pairingDistance = 1.25f;
 
@@ -32,6 +39,11 @@ public class BirdDragHandler : MonoBehaviour
     public Animator pedestalAnimator;
     private Animator cameraAnimator;
     private bool animateCamera = true;
+
+    // Velocity tracking for rotation
+    private Vector3 previousMousePosition;
+    private Vector3 mouseVelocity;
+    private float targetRotation;
 
     private void Start()
     {
@@ -61,6 +73,8 @@ public class BirdDragHandler : MonoBehaviour
         isDragging = true;
         isDraggingAny = true;
         offset = transform.position - GetMouseWorldPosition();
+        previousMousePosition = GetMouseWorldPosition();
+        mouseVelocity = Vector3.zero;
 
         // Break existing pair
         BreakPair();
@@ -86,6 +100,26 @@ public class BirdDragHandler : MonoBehaviour
         if (isDragging)
         {
             UpdatePairingPreview();
+            UpdateDragRotation();
+        }
+        else
+        {
+            // Smoothly return to neutral rotation when not dragging
+            targetRotation = 0f;
+        }
+
+        // Apply smooth rotation interpolation
+        if (rotationParent != null)
+        {
+            float currentZRotation = rotationParent.localEulerAngles.z;
+            if (currentZRotation > 180f) currentZRotation -= 360f;
+            
+            float newRotation = Mathf.Lerp(currentZRotation, targetRotation, Time.deltaTime * rotationSpeed);
+            rotationParent.localEulerAngles = new Vector3(
+                rotationParent.localEulerAngles.x,
+                rotationParent.localEulerAngles.y,
+                newRotation
+            );
         }
     }
 
@@ -93,9 +127,27 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (isDragging)
         {
-            Vector3 targetPosition = GetMouseWorldPosition() + offset;
+            Vector3 currentMousePosition = GetMouseWorldPosition();
+            
+            // Calculate velocity with smoothing
+            Vector3 rawVelocity = (currentMousePosition - previousMousePosition) / Time.deltaTime;
+            mouseVelocity = Vector3.Lerp(mouseVelocity, rawVelocity, velocitySmoothing);
+            
+            previousMousePosition = currentMousePosition;
+            
+            Vector3 targetPosition = currentMousePosition + offset;
             transform.position = ClampToScreenBounds(targetPosition);
         }
+    }
+
+    private void UpdateDragRotation()
+    {
+        // Calculate rotation based on horizontal velocity
+        float horizontalVelocity = mouseVelocity.x;
+        
+        // Map velocity to rotation angle (clamp to max angle)
+        float velocityFactor = Mathf.Clamp(horizontalVelocity * 0.5f, -maxRotationAngle, maxRotationAngle);
+        targetRotation = velocityFactor;
     }
 
     private void OnMouseUp()
