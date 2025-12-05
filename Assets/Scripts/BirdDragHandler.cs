@@ -145,8 +145,8 @@ public class BirdDragHandler : MonoBehaviour
         // Calculate rotation based on horizontal velocity
         float horizontalVelocity = mouseVelocity.x;
         
-        // Map velocity to rotation angle (clamp to max angle)
-        float velocityFactor = Mathf.Clamp(horizontalVelocity * 0.5f, -maxRotationAngle, maxRotationAngle);
+        // Map velocity to rotation angle (clamp to max angle, negated for opposite direction)
+        float velocityFactor = Mathf.Clamp(horizontalVelocity * -0.5f, -maxRotationAngle, maxRotationAngle);
         targetRotation = velocityFactor;
     }
 
