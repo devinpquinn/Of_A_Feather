@@ -13,8 +13,8 @@ public class BirdDragHandler : MonoBehaviour
 
     [Header("Rotation Settings")]
     [SerializeField] private float maxRotationAngle = 15f;
-    [SerializeField] private float rotationSpeed = 8f;
-    [SerializeField] private float velocitySmoothing = 0.15f;
+    [SerializeField] private float rotationSpeed = 30f;
+    [SerializeField] private float velocitySmoothing = 0.1f;
 
     private float pairingDistance = 1.25f;
 
