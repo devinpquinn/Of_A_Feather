@@ -12,6 +12,7 @@ public class BirdDragHandler : MonoBehaviour
     public Transform rotationParent;
 
     [Header("Rotation Settings")]
+    [SerializeField] private bool enableRotation = true;
     [SerializeField] private float maxRotationAngle = 15f;
     [SerializeField] private float rotationSpeed = 30f;
     [SerializeField] private float velocitySmoothing = 0.1f;
@@ -102,21 +103,24 @@ public class BirdDragHandler : MonoBehaviour
         if (isDragging)
         {
             UpdatePairingPreview();
-            UpdateDragRotation();
+            if (enableRotation)
+            {
+                UpdateDragRotation();
+            }
             timeSinceRelease = 0f;
         }
         else
         {
             // Wait for delay before snapping to zero
             timeSinceRelease += Time.deltaTime;
-            if (timeSinceRelease >= rotationReleaseDelay)
+            if (timeSinceRelease >= rotationReleaseDelay && enableRotation)
             {
                 targetRotation = 0f;
             }
         }
 
         // Apply smooth rotation interpolation
-        if (rotationParent != null)
+        if (rotationParent != null && enableRotation)
         {
             float currentZRotation = rotationParent.localEulerAngles.z;
             if (currentZRotation > 180f) currentZRotation -= 360f;
