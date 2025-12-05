@@ -15,6 +15,7 @@ public class BirdDragHandler : MonoBehaviour
     [SerializeField] private float maxRotationAngle = 15f;
     [SerializeField] private float rotationSpeed = 30f;
     [SerializeField] private float velocitySmoothing = 0.1f;
+    [SerializeField] private float rotationReleaseDelay = 0.1f;
 
     private float pairingDistance = 1.25f;
 
@@ -44,6 +45,7 @@ public class BirdDragHandler : MonoBehaviour
     private Vector3 previousMousePosition;
     private Vector3 mouseVelocity;
     private float targetRotation;
+    private float timeSinceRelease;
 
     private void Start()
     {
@@ -101,11 +103,16 @@ public class BirdDragHandler : MonoBehaviour
         {
             UpdatePairingPreview();
             UpdateDragRotation();
+            timeSinceRelease = 0f;
         }
         else
         {
-            // Smoothly return to neutral rotation when not dragging
-            targetRotation = 0f;
+            // Wait for delay before snapping to zero
+            timeSinceRelease += Time.deltaTime;
+            if (timeSinceRelease >= rotationReleaseDelay)
+            {
+                targetRotation = 0f;
+            }
         }
 
         // Apply smooth rotation interpolation
