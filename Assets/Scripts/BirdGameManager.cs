@@ -7,6 +7,11 @@ public class BirdGameManager : MonoBehaviour
 {
     public static BirdGameManager Instance { get; private set; }
 
+    [Header("Cursor Settings")]
+    [SerializeField] private Texture2D defaultCursor;
+    [SerializeField] private Texture2D hoverCursor;
+    [SerializeField] private Texture2D grabbedCursor;
+
     public GameObject birdPrefab;
     public TextMeshProUGUI levelText;
     
@@ -39,6 +44,7 @@ public class BirdGameManager : MonoBehaviour
     private void Start()
     {
         spawnedPositions.Clear();
+        SetDefaultCursor();
         UpdateLevelText();
         SpawnBirdPairs(numPairsToSpawn);
     }
@@ -285,5 +291,30 @@ public class BirdGameManager : MonoBehaviour
         }
         
         levelText.GetComponent<Animator>().Play("LevelText_In", 0, 0f);
+    }
+    
+    // Cursor management methods
+    public void SetDefaultCursor()
+    {
+        if (defaultCursor != null)
+        {
+            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+        }
+    }
+    
+    public void SetHoverCursor()
+    {
+        if (hoverCursor != null)
+        {
+            Cursor.SetCursor(hoverCursor, Vector2.zero, CursorMode.Auto);
+        }
+    }
+    
+    public void SetGrabbedCursor()
+    {
+        if (grabbedCursor != null)
+        {
+            Cursor.SetCursor(grabbedCursor, Vector2.zero, CursorMode.Auto);
+        }
     }
 }

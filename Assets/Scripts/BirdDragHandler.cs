@@ -4,11 +4,6 @@ using UnityEngine.Rendering;
 
 public class BirdDragHandler : MonoBehaviour
 {
-    [Header("Cursor Settings")]
-    [SerializeField] private Texture2D defaultCursor;
-    [SerializeField] private Texture2D hoverCursor;
-    [SerializeField] private Texture2D grabbedCursor;
-    
     public Transform rotationParent;
 
     [Header("Rotation Settings")]
@@ -60,11 +55,6 @@ public class BirdDragHandler : MonoBehaviour
         {
             originalSortingLayer = sortingGroup.sortingLayerName;
         }
-
-        if (defaultCursor != null)
-        {
-            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
-        }
     }
 
     private void OnMouseDown()
@@ -92,9 +82,9 @@ public class BirdDragHandler : MonoBehaviour
             animator.SetBool("Grabbed", true);
         }
 
-        if (grabbedCursor != null)
+        if (BirdGameManager.Instance != null)
         {
-            Cursor.SetCursor(grabbedCursor, Vector2.zero, CursorMode.Auto);
+            BirdGameManager.Instance.SetGrabbedCursor();
         }
     }
 
@@ -187,9 +177,9 @@ public class BirdDragHandler : MonoBehaviour
             animator.SetBool("Hover", false);
         }
 
-        if (defaultCursor != null)
+        if (BirdGameManager.Instance != null)
         {
-            Cursor.SetCursor(hoverCursor, Vector2.zero, CursorMode.Auto);
+            BirdGameManager.Instance.SetHoverCursor();
         }
     }
 
@@ -204,9 +194,9 @@ public class BirdDragHandler : MonoBehaviour
             animator.SetBool("Hover", true);
         }
 
-        if (hoverCursor != null && !isDraggingAny)
+        if (!isDraggingAny && BirdGameManager.Instance != null)
         {
-            Cursor.SetCursor(hoverCursor, Vector2.zero, CursorMode.Auto);
+            BirdGameManager.Instance.SetHoverCursor();
         }
     }
 
@@ -217,9 +207,9 @@ public class BirdDragHandler : MonoBehaviour
             animator.SetBool("Hover", false);
         }
 
-        if (defaultCursor != null && !isDraggingAny)
+        if (!isDraggingAny && BirdGameManager.Instance != null)
         {
-            Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+            BirdGameManager.Instance.SetDefaultCursor();
         }
     }
 
