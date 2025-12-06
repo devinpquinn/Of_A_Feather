@@ -87,22 +87,20 @@ public class BirdDragHandler : MonoBehaviour
         // Reposition rotation pivot to cursor location
         if (rotationParent != null && rotationChild != null)
         {
-            // Store child's world position and rotation
+            // Store child's world position
             Vector3 childWorldPosition = rotationChild.position;
-            Quaternion childWorldRotation = rotationChild.rotation;
             
             // Unparent the child temporarily
             rotationChild.SetParent(null);
             
-            // Move rotationParent to the cursor's world position (with offset)
-            rotationParent.position = GetMouseWorldPosition() + offset;
+            // Move rotationParent to the cursor's world position
+            rotationParent.position = GetMouseWorldPosition();
             
             // Re-parent the child back to rotationParent
             rotationChild.SetParent(rotationParent);
             
             // Restore the child's world position and rotation
             rotationChild.position = childWorldPosition;
-            rotationChild.rotation = childWorldRotation;
         }
 
         // Break existing pair
