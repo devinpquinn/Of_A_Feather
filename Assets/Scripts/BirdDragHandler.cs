@@ -42,6 +42,12 @@ public class BirdDragHandler : MonoBehaviour
     private Vector3 mouseVelocity;
     private float targetRotation;
     private float timeSinceRelease;
+    
+    // Dynamic pivot tracking
+    private Transform rotationChild;
+    private Transform originalParentOfRotationParent;
+    private Vector3 originalRotationParentLocalPosition;
+    private Quaternion originalRotationParentLocalRotation;
 
     private void Start()
     {
@@ -50,6 +56,15 @@ public class BirdDragHandler : MonoBehaviour
         
         sortingGroup = GetComponentInChildren<SortingGroup>();
         animator = GetComponent<Animator>();
+        
+        // Cache the child of rotationParent for re-parenting
+        if (rotationParent != null && rotationParent.childCount > 0)
+        {
+            rotationChild = rotationParent.GetChild(0);
+            originalParentOfRotationParent = rotationParent.parent;
+            originalRotationParentLocalPosition = rotationParent.localPosition;
+            originalRotationParentLocalRotation = rotationParent.localRotation;
+        }
 
         if (sortingGroup != null)
         {
@@ -68,6 +83,27 @@ public class BirdDragHandler : MonoBehaviour
         offset = transform.position - GetMouseWorldPosition();
         previousMousePosition = GetMouseWorldPosition();
         mouseVelocity = Vector3.zero;
+
+        // Reposition rotation pivot to cursor location
+        if (rotationParent != null && rotationChild != null)
+        {
+            // Store child's world position and rotation
+            Vector3 childWorldPosition = rotationChild.position;
+            Quaternion childWorldRotation = rotationChild.rotation;
+            
+            // Unparent the child temporarily
+            rotationChild.SetParent(null);
+            
+            // Move rotationParent to the cursor's world position (with offset)
+            rotationParent.position = GetMouseWorldPosition() + offset;
+            
+            // Re-parent the child back to rotationParent
+            rotationChild.SetParent(rotationParent);
+            
+            // Restore the child's world position and rotation
+            rotationChild.position = childWorldPosition;
+            rotationChild.rotation = childWorldRotation;
+        }
 
         // Break existing pair
         BreakPair();
@@ -159,6 +195,29 @@ public class BirdDragHandler : MonoBehaviour
     
         isDragging = false;
         isDraggingAny = false;
+        
+        // Restore original rotation parent hierarchy
+        if (rotationParent != null && rotationChild != null)
+        {
+            // Store child's world position and rotation
+            Vector3 childWorldPosition = rotationChild.position;
+            Quaternion childWorldRotation = rotationChild.rotation;
+            
+            // Unparent the child temporarily
+            rotationChild.SetParent(null);
+            
+            // Restore rotationParent to its original parent and local transform
+            rotationParent.SetParent(originalParentOfRotationParent);
+            rotationParent.localPosition = originalRotationParentLocalPosition;
+            rotationParent.localRotation = originalRotationParentLocalRotation;
+            
+            // Re-parent the child back to rotationParent
+            rotationChild.SetParent(rotationParent);
+            
+            // Restore the child's world position and rotation
+            rotationChild.position = childWorldPosition;
+            rotationChild.rotation = childWorldRotation;
+        }
         
         // Clear any highlighted bird
         ClearHighlightedBird();
