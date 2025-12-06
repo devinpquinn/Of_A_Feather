@@ -10,6 +10,7 @@ public class BirdDragHandler : MonoBehaviour
     private float rotationSpeed = 30f;
     private float velocitySmoothing = 0.1f;
     private float rotationReleaseDelay = 0.1f;
+    private Vector3 pivotOffset = new Vector3(0.33f, -0.33f, 0f);
 
     private float pairingDistance = 1.25f;
 
@@ -92,7 +93,7 @@ public class BirdDragHandler : MonoBehaviour
             rotationChild.SetParent(null);
             
             // Move rotationParent to the cursor's world position
-            rotationParent.position = GetMouseWorldPosition();
+            rotationParent.position = GetMouseWorldPosition() + pivotOffset;
             
             // Re-parent the child back to rotationParent
             rotationChild.SetParent(rotationParent);

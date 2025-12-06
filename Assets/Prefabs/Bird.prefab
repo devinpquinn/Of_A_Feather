@@ -368,10 +368,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BirdDragHandler
   rotationParent: {fileID: 7758101163941935139}
   enableRotation: 1
-  maxRotationAngle: 15
-  rotationSpeed: 30
-  velocitySmoothing: 0.1
-  rotationReleaseDelay: 0.1
   pedestalAnimator: {fileID: 6380726862582063555}
 --- !u!95 &7490156472225559571
 Animator:
