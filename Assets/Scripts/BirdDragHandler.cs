@@ -4,14 +4,12 @@ using UnityEngine.Rendering;
 
 public class BirdDragHandler : MonoBehaviour
 {
-    public Transform rotationParent;
-
-    [Header("Rotation Settings")]
+    [SerializeField] private Transform rotationParent;
     [SerializeField] private bool enableRotation = true;
-    [SerializeField] private float maxRotationAngle = 15f;
-    [SerializeField] private float rotationSpeed = 30f;
-    [SerializeField] private float velocitySmoothing = 0.1f;
-    [SerializeField] private float rotationReleaseDelay = 0.1f;
+    private float maxRotationAngle = 15f;
+    private float rotationSpeed = 30f;
+    private float velocitySmoothing = 0.1f;
+    private float rotationReleaseDelay = 0.1f;
 
     private float pairingDistance = 1.25f;
 
