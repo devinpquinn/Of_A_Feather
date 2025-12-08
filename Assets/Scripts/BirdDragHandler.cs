@@ -139,6 +139,8 @@ public class BirdDragHandler : MonoBehaviour
             if (timeSinceRelease >= rotationReleaseDelay && enableRotation)
             {
                 targetRotation = 0f;
+                rotationParent.localEulerAngles = Vector3.zero;
+                rotationChild.localPosition = Vector3.zero;
             }
         }
 
