@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d4eee7dca3613184b92a9a36d1697f22
+guid: f375d9ba162d09343a7b1c117f12cee2
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -898966817671726267
-    second: Button 02_0
+      213: 7754948693187065913
+    second: Banner 02_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -52,7 +52,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 12
-  spriteBorder: {x: 2, y: 3, z: 2, w: 2}
+  spriteBorder: {x: 5, y: 5, z: 5, w: 5}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Button 02_0
+      name: Banner 02_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 24
-        height: 24
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 54b30d7317a3683f0800000000000000
-      internalID: -898966817671726267
+      spriteID: 9387bccbfbc1f9b60800000000000000
+      internalID: 7754948693187065913
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Button 02_0: -898966817671726267
+      Banner 02_0: 7754948693187065913
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
