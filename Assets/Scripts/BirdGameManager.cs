@@ -198,8 +198,10 @@ public class BirdGameManager : MonoBehaviour
     
     private IEnumerator PlayCelebrationAnimation()
     {
-        // Show victory flash effect
+        // Show victory ui
         victoryScreen.SetActive(true);
+        
+        levelText.GetComponent<Animator>().Play("LevelText_Out", 0, 0f);
         
         yield return new WaitForSeconds(0.5f);
         
@@ -220,11 +222,6 @@ public class BirdGameManager : MonoBehaviour
         }
         
         yield return new WaitForSeconds(0.5f);
-        
-        levelText.GetComponent<Animator>().Play("LevelText_Out", 0, 0f);
-        
-        // Play victory screen animation
-        victoryScreen.GetComponent<Animator>().Play("VictoryScreen_Banner", 0, 0f);
     }
     
     // Public methods for victory screen buttons
