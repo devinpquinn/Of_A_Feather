@@ -836,7 +836,7 @@ MonoBehaviour:
   m_AnimationTriggers:
     m_NormalTrigger: Exit
     m_HighlightedTrigger: Enter
-    m_PressedTrigger: Exit
+    m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
@@ -1391,7 +1391,7 @@ MonoBehaviour:
   m_AnimationTriggers:
     m_NormalTrigger: Exit
     m_HighlightedTrigger: Enter
-    m_PressedTrigger: Exit
+    m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
@@ -1535,7 +1535,7 @@ MonoBehaviour:
   m_AnimationTriggers:
     m_NormalTrigger: Exit
     m_HighlightedTrigger: Enter
-    m_PressedTrigger: Exit
+    m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
@@ -2406,7 +2406,7 @@ MonoBehaviour:
   m_AnimationTriggers:
     m_NormalTrigger: Exit
     m_HighlightedTrigger: Enter
-    m_PressedTrigger: Exit
+    m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
