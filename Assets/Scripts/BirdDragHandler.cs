@@ -623,11 +623,12 @@ public class BirdDragHandler : MonoBehaviour
         pairLineOutline.startColor = Color.black;
         pairLineOutline.endColor = Color.black;
         pairLineOutline.sortingOrder = -4;
+        pairLineOutline.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         
         pairLineOutline.SetPosition(0, transform.position);
         pairLineOutline.SetPosition(1, otherBird.transform.position);
         
-        // Create colored line on top
+        // Create white line on top
         GameObject lineObject = new GameObject($"PairLine_{gameObject.name}_{otherBird.gameObject.name}");
         pairLineRenderer = lineObject.AddComponent<LineRenderer>();
         
@@ -639,6 +640,7 @@ public class BirdDragHandler : MonoBehaviour
         pairLineRenderer.startColor = connectionColor;
         pairLineRenderer.endColor = connectionColor;
         pairLineRenderer.sortingOrder = -2;
+        pairLineRenderer.maskInteraction = SpriteMaskInteraction.VisibleOutsideMask;
         
         // Set positions
         pairLineRenderer.SetPosition(0, transform.position);
