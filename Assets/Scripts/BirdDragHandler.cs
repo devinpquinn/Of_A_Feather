@@ -495,6 +495,8 @@ public class BirdDragHandler : MonoBehaviour
         // Flash matching parts on both birds
         myRandomizer.FlashMatchingParts(otherColors);
         otherRandomizer.FlashMatchingParts(myRandomizer.GetColors());
+        
+        SoundManager.PlaySound("Bird_Nope");
     }
     
     public void PlayCelebrationNudge()

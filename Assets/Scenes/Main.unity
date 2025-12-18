@@ -773,6 +773,7 @@ GameObject:
   - component: {fileID: 677484046}
   - component: {fileID: 677484045}
   - component: {fileID: 677484048}
+  - component: {fileID: 677484049}
   m_Layer: 5
   m_Name: HarderLevelButton
   m_TagString: Untagged
@@ -916,6 +917,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &677484049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677484041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc4a3b8275d014d987f4c392b04f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTrigger
 --- !u!1 &747337495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1001,6 +1014,7 @@ GameObject:
   m_Component:
   - component: {fileID: 747757173}
   - component: {fileID: 747757174}
+  - component: {fileID: 747757175}
   m_Layer: 5
   m_Name: VictoryScreen
   m_TagString: Untagged
@@ -1053,6 +1067,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &747757175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747757172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc4a3b8275d014d987f4c392b04f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTrigger
 --- !u!1 &786419499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1328,6 +1354,7 @@ GameObject:
   - component: {fileID: 1250665651}
   - component: {fileID: 1250665650}
   - component: {fileID: 1250665653}
+  - component: {fileID: 1250665654}
   m_Layer: 5
   m_Name: HomeButton
   m_TagString: Untagged
@@ -1459,6 +1486,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1250665654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250665648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc4a3b8275d014d987f4c392b04f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTrigger
 --- !u!1 &1365328520
 GameObject:
   m_ObjectHideFlags: 0
@@ -1472,6 +1511,7 @@ GameObject:
   - component: {fileID: 1365328525}
   - component: {fileID: 1365328524}
   - component: {fileID: 1365328527}
+  - component: {fileID: 1365328528}
   m_Layer: 5
   m_Name: EasierLevelButton
   m_TagString: Untagged
@@ -1615,6 +1655,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1365328528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365328520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc4a3b8275d014d987f4c392b04f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTrigger
 --- !u!1 &1410536675
 GameObject:
   m_ObjectHideFlags: 0
@@ -2217,6 +2269,7 @@ GameObject:
   - component: {fileID: 268711069018020418}
   - component: {fileID: 7621614297552640431}
   - component: {fileID: 7621614297552640432}
+  - component: {fileID: 7621614297552640433}
   m_Layer: 5
   m_Name: SimilarLevelButton
   m_TagString: Untagged
@@ -2448,6 +2501,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7621614297552640433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808278172750888090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc4a3b8275d014d987f4c392b04f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTrigger
 --- !u!1 &9027767350520502667
 GameObject:
   m_ObjectHideFlags: 0

@@ -101,6 +101,7 @@ GameObject:
   - component: {fileID: 6760885384847618382}
   - component: {fileID: 8430837320096015127}
   - component: {fileID: 6380726862582063555}
+  - component: {fileID: 8975927960172887572}
   m_Layer: 0
   m_Name: Pedestal
   m_TagString: Untagged
@@ -204,6 +205,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8975927960172887572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222433881853489923}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc4a3b8275d014d987f4c392b04f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTrigger
 --- !u!1 &1471588067975771032
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,6 +320,7 @@ GameObject:
   - component: {fileID: 3196429514757646833}
   - component: {fileID: 7490156472225559571}
   - component: {fileID: 791302193681298720}
+  - component: {fileID: 8590409130672064188}
   m_Layer: 0
   m_Name: Bird
   m_TagString: Untagged
@@ -438,6 +452,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.126303, y: 1.3167096}
   m_EdgeRadius: 0
+--- !u!114 &8590409130672064188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993512181723143536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ddc4a3b8275d014d987f4c392b04f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundTrigger
 --- !u!1 &2168493233770253144
 GameObject:
   m_ObjectHideFlags: 0
