@@ -535,6 +535,9 @@ public class BirdDragHandler : MonoBehaviour
         {
             cameraAnimator.SetTrigger("BumpDown");
         }
+        
+        // Play sound effect
+        SoundManager.PlaySound("Pair_Connect");
 
         // Register pair with game manager
         if (BirdGameManager.Instance != null)
@@ -588,6 +591,9 @@ public class BirdDragHandler : MonoBehaviour
                 Destroy(currentPartner.pairLineOutline.gameObject);
                 currentPartner.pairLineOutline = null;
             }
+            
+            // Play sound effect
+            SoundManager.PlaySound("Pair_Disconnect");
 
             // Unregister pair from game manager
             if (BirdGameManager.Instance != null)
