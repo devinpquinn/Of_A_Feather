@@ -519,8 +519,8 @@ public class BirdDragHandler : MonoBehaviour
         currentPartner = otherBird;
         otherBird.currentPartner = this;
 
-        // Create line renderer for this bird
-        CreatePairLine(otherBird);
+        // Create line renderer for this bird after a short delay
+        StartCoroutine(CreatePairLineDelayed(otherBird));
 
         // Play nudge animation on the partner
         if (otherBird.animator != null)
@@ -564,33 +564,8 @@ public class BirdDragHandler : MonoBehaviour
             pedestalAnimator?.SetBool("Paired", false);
             currentPartner.pedestalAnimator?.SetBool("Paired", false);
 
-            // Destroy line renderer if it exists
-            if (pairLineRenderer != null)
-            {
-                Destroy(pairLineRenderer.gameObject);
-                pairLineRenderer = null;
-            }
-            
-            // Destroy outline if it exists
-            if (pairLineOutline != null)
-            {
-                Destroy(pairLineOutline.gameObject);
-                pairLineOutline = null;
-            }
-            
-            // Also destroy partner's line renderer if it exists
-            if (currentPartner.pairLineRenderer != null)
-            {
-                Destroy(currentPartner.pairLineRenderer.gameObject);
-                currentPartner.pairLineRenderer = null;
-            }
-            
-            // Also destroy partner's outline if it exists
-            if (currentPartner.pairLineOutline != null)
-            {
-                Destroy(currentPartner.pairLineOutline.gameObject);
-                currentPartner.pairLineOutline = null;
-            }
+            // Destroy line renderers after a short delay
+            StartCoroutine(DestroyPairLinesDelayed(currentPartner));
             
             // Play sound effect
             SoundManager.PlaySound("Pair_Disconnect");
@@ -612,6 +587,45 @@ public class BirdDragHandler : MonoBehaviour
                 BirdGameManager.Instance.OnPairBroken();
             }
         }
+    }
+    
+    private IEnumerator DestroyPairLinesDelayed(BirdDragHandler partner)
+    {
+        yield return new WaitForSeconds(0.05f);
+        
+        // Destroy line renderer if it exists
+        if (pairLineRenderer != null)
+        {
+            Destroy(pairLineRenderer.gameObject);
+            pairLineRenderer = null;
+        }
+        
+        // Destroy outline if it exists
+        if (pairLineOutline != null)
+        {
+            Destroy(pairLineOutline.gameObject);
+            pairLineOutline = null;
+        }
+        
+        // Also destroy partner's line renderer if it exists
+        if (partner != null && partner.pairLineRenderer != null)
+        {
+            Destroy(partner.pairLineRenderer.gameObject);
+            partner.pairLineRenderer = null;
+        }
+        
+        // Also destroy partner's outline if it exists
+        if (partner != null && partner.pairLineOutline != null)
+        {
+            Destroy(partner.pairLineOutline.gameObject);
+            partner.pairLineOutline = null;
+        }
+    }
+    
+    private IEnumerator CreatePairLineDelayed(BirdDragHandler otherBird)
+    {
+        yield return new WaitForSeconds(0.05f);
+        CreatePairLine(otherBird);
     }
     
     private void CreatePairLine(BirdDragHandler otherBird)
