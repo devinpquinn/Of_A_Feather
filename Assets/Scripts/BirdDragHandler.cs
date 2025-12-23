@@ -368,7 +368,7 @@ public class BirdDragHandler : MonoBehaviour
     
     private void HighlightBird(BirdDragHandler bird)
     {
-        bird.animator?.SetTrigger("Wiggle");
+        bird.animator?.SetBool("Highlighted", true);
         bird.pedestalAnimator?.SetBool("Highlighted", true);
         currentlyHighlightedBird = bird;
     }
@@ -377,6 +377,7 @@ public class BirdDragHandler : MonoBehaviour
     {
         if (currentlyHighlightedBird != null)
         {
+            currentlyHighlightedBird.animator?.SetBool("Highlighted", false);
             currentlyHighlightedBird.pedestalAnimator?.SetBool("Highlighted", false);
             currentlyHighlightedBird = null;
         }
