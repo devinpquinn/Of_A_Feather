@@ -524,7 +524,6 @@ public class BirdDragHandler : MonoBehaviour
         StartCoroutine(CreatePairLineDelayed(otherBird));
 
         // Play nudge animation on the partner
-        otherBird.pedestalAnimator?.SetBool("Paired", true);
         otherBird.animator.Play("Bird_Nudge", 0, 0f);
         
         // Play camera bump animation
