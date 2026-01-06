@@ -15,12 +15,26 @@ public class BirdGameManager : MonoBehaviour
     public GameObject birdPrefab;
     public TextMeshProUGUI levelText;
     
-    private float minSpawnX = -7.8f;
-    private float maxSpawnX = 7.8f;
-    private float minSpawnY = -4.6f;
-    private float maxSpawnY = 3f;
+    // Base values for camera zoom = 5
+    private const float baseMinSpawnX = -7.8f;
+    private const float baseMaxSpawnX = 7.8f;
+    private const float baseMinSpawnY = -4.6f;
+    private const float baseMaxSpawnY = 3f;
+    private const float baseMinBirdDistance = 1.5f;
+    private const float baseCameraSize = 5f;
     
-    private float minBirdDistance = 1.5f; // Minimum distance between birds at spawn
+    // Camera scaling thresholds
+    private const int minPairsForZoom = 10;
+    private const int maxPairsForZoom = 20;
+    private const float maxCameraSize = 6f;
+    
+    // Current scaled values
+    private float minSpawnX;
+    private float maxSpawnX;
+    private float minSpawnY;
+    private float maxSpawnY;
+    private float minBirdDistance;
+    
     private int maxSpawnAttempts = 50; // Maximum attempts to find a valid spawn position
     
     public int numPairsToSpawn = 5; //the number of pairs of birds to spawn; each pair consists of two birds that do not share any of the same color in the same body part
@@ -45,8 +59,50 @@ public class BirdGameManager : MonoBehaviour
     {
         spawnedPositions.Clear();
         SetDefaultCursor();
+        UpdateCameraScale();
         UpdateLevelText();
         SpawnBirdPairs(numPairsToSpawn);
+    }
+    
+    private float GetCameraScaleFactor()
+    {
+        // For 1-10 pairs, use base scale (1.0)
+        if (numPairsToSpawn < minPairsForZoom)
+        {
+            return 1f;
+        }
+        
+        // For 20+ pairs, use max scale
+        if (numPairsToSpawn >= maxPairsForZoom)
+        {
+            return maxCameraSize / baseCameraSize;
+        }
+        
+        // Interpolate between 11-20 pairs
+        float progress = (float)(numPairsToSpawn - minPairsForZoom) / (maxPairsForZoom - minPairsForZoom);
+        float targetCameraSize = Mathf.Lerp(baseCameraSize, maxCameraSize, progress);
+        return targetCameraSize / baseCameraSize;
+    }
+    
+    private void UpdateCameraScale()
+    {
+        float scaleFactor = GetCameraScaleFactor();
+        
+        // Calculate scaled spawn bounds
+        minSpawnX = baseMinSpawnX * scaleFactor;
+        maxSpawnX = baseMaxSpawnX * scaleFactor;
+        minSpawnY = baseMinSpawnY * scaleFactor;
+        maxSpawnY = baseMaxSpawnY * scaleFactor;
+        
+        // Calculate scaled minimum bird distance
+        minBirdDistance = baseMinBirdDistance * scaleFactor;
+        
+        // Update camera orthographic size
+        Camera mainCamera = Camera.main;
+        if (mainCamera != null)
+        {
+            mainCamera.orthographicSize = baseCameraSize * scaleFactor;
+        }
     }
     
     private void SpawnBirdPairs(int pairCount)
