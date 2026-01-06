@@ -1113,6 +1113,7 @@ MonoBehaviour:
   grabbedCursor: {fileID: 2800000, guid: 64075b032218a9b499e95eef81ff9229, type: 3}
   birdPrefab: {fileID: 1993512181723143536, guid: 726e850d2050a164f8d6c6434ce5c17f, type: 3}
   levelText: {fileID: 846812611}
+  backgroundObject: {fileID: 470077624}
   numPairsToSpawn: 2
   victoryScreen: {fileID: 747757172}
 --- !u!4 &786419501

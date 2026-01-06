@@ -14,6 +14,7 @@ public class BirdGameManager : MonoBehaviour
 
     public GameObject birdPrefab;
     public TextMeshProUGUI levelText;
+    [SerializeField] private GameObject backgroundObject;
     
     // Base values for camera zoom = 5
     private const float baseMinSpawnX = -7.8f;
@@ -102,6 +103,12 @@ public class BirdGameManager : MonoBehaviour
         if (mainCamera != null)
         {
             mainCamera.orthographicSize = baseCameraSize * scaleFactor;
+        }
+        
+        // Scale the background object
+        if (backgroundObject != null)
+        {
+            backgroundObject.transform.localScale = Vector3.one * scaleFactor;
         }
     }
     
