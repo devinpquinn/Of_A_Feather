@@ -497,7 +497,7 @@ public class BirdDragHandler : MonoBehaviour
         myRandomizer.FlashMatchingParts(otherColors);
         otherRandomizer.FlashMatchingParts(myRandomizer.GetColors());
         
-        //SoundManager.PlaySound("Bird_Nope");
+        // Play sound effect
     }
     
     public void PlayCelebrationNudge()
@@ -533,7 +533,6 @@ public class BirdDragHandler : MonoBehaviour
         }
         
         // Play sound effect
-        //SoundManager.PlaySound("Pair_Connect");
 
         // Register pair with game manager
         if (BirdGameManager.Instance != null)
@@ -564,7 +563,6 @@ public class BirdDragHandler : MonoBehaviour
             StartCoroutine(DestroyPairLinesDelayed(currentPartner));
             
             // Play sound effect
-            //SoundManager.PlaySound("Pair_Disconnect");
 
             // Unregister pair from game manager
             if (BirdGameManager.Instance != null)
