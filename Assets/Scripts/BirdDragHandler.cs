@@ -533,6 +533,7 @@ public class BirdDragHandler : MonoBehaviour
         }
         
         // Play sound effect
+        SoundManager.PlaySound("Pair_Connect");
 
         // Register pair with game manager
         if (BirdGameManager.Instance != null)
