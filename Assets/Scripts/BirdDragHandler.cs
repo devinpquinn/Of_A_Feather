@@ -564,6 +564,7 @@ public class BirdDragHandler : MonoBehaviour
             StartCoroutine(DestroyPairLinesDelayed(currentPartner));
             
             // Play sound effect
+            SoundManager.PlaySound("Pair_Break");
 
             // Unregister pair from game manager
             if (BirdGameManager.Instance != null)
