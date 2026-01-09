@@ -498,6 +498,7 @@ public class BirdDragHandler : MonoBehaviour
         otherRandomizer.FlashMatchingParts(myRandomizer.GetColors());
         
         // Play sound effect
+        SoundManager.PlaySound("Pair_Fail");
     }
     
     public void PlayCelebrationNudge()
@@ -561,7 +562,7 @@ public class BirdDragHandler : MonoBehaviour
             currentPartner.pedestalAnimator?.SetBool("Paired", false);
 
             // Destroy line renderers after a short delay
-            StartCoroutine(DestroyPairLinesDelayed(currentPartner));
+            DestroyPairLinesDelayed(currentPartner);
             
             // Play sound effect
             SoundManager.PlaySound("Pair_Break");
@@ -585,10 +586,8 @@ public class BirdDragHandler : MonoBehaviour
         }
     }
     
-    private IEnumerator DestroyPairLinesDelayed(BirdDragHandler partner)
+    private void DestroyPairLinesDelayed(BirdDragHandler partner)
     {
-        yield return new WaitForSeconds(0.05f);
-        
         // Destroy line renderer if it exists
         if (pairLineRenderer != null)
         {
