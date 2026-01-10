@@ -17,6 +17,7 @@ public class SoundManager : MonoBehaviour
         float volume = 1f;
         float pitch = 1f;
         bool loop = false;
+        bool varyPitch = true;
         
         // Check for special behavior for specific sounds
         switch (soundName)
@@ -24,6 +25,11 @@ public class SoundManager : MonoBehaviour
             case "Pair_Fail":
                 volume = 0.7f;
                 break;
+        }
+        
+        if(varyPitch)
+        {
+            pitch = Random.Range(0.8f, 1.2f);
         }
         
         // Create a temporary GameObject with an AudioSource
