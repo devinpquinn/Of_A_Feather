@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour
         
         if(varyPitch)
         {
-            pitch = Random.Range(0.8f, 1.2f);
+            pitch = Random.Range(0.85f, 1.15f);
         }
         
         // Create a temporary GameObject with an AudioSource
