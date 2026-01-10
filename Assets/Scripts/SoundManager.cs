@@ -21,7 +21,9 @@ public class SoundManager : MonoBehaviour
         // Check for special behavior for specific sounds
         switch (soundName)
         {
-            // Special cases
+            case "Pair_Fail":
+                volume = 0.7f;
+                break;
         }
         
         // Create a temporary GameObject with an AudioSource
