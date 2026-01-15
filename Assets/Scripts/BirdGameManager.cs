@@ -44,6 +44,7 @@ public class BirdGameManager : MonoBehaviour
     private int currentPairCount = 0;
     
     public bool IsRoundComplete { get; private set; } = false;
+    private bool isResettingLevel = false;
     public GameObject victoryScreen;
     
     // Track all paired birds for celebration
@@ -290,23 +291,27 @@ public class BirdGameManager : MonoBehaviour
     // Public methods for victory screen buttons
     public void PlayAgainEasier()
     {
+        if (isResettingLevel) return;
         numPairsToSpawn = Mathf.Max(1, numPairsToSpawn - 1);
         StartCoroutine(ResetLevel());
     }
     
     public void PlayAgainSameDifficulty()
     {
+        if (isResettingLevel) return;
         StartCoroutine(ResetLevel());
     }
     
     public void PlayAgainHarder()
     {
+        if (isResettingLevel) return;
         numPairsToSpawn++;
         StartCoroutine(ResetLevel());
     }
     
     private IEnumerator ResetLevel()
     {
+        isResettingLevel = true;
         yield return new WaitForSeconds(0.075f);
     
         // Hide victory screen
@@ -341,6 +346,7 @@ public class BirdGameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         victoryScreen.SetActive(false);
+        isResettingLevel = false;
     }
     
     private void UpdateLevelText()
