@@ -12,6 +12,10 @@ public class BirdGameManager : MonoBehaviour
     [SerializeField] private Texture2D hoverCursor;
     [SerializeField] private Texture2D grabbedCursor;
 
+    [Header("Celebration Settings")]
+    [SerializeField] private float minCelebrationPitch = 0.85f;
+    [SerializeField] private float maxCelebrationPitch = 1.3f;
+
     public GameObject birdPrefab;
     public TextMeshProUGUI levelText;
     [SerializeField] private GameObject backgroundObject;
@@ -269,16 +273,27 @@ public class BirdGameManager : MonoBehaviour
         
         yield return new WaitForSeconds(0.5f);
         
-        // Play nudge animation for each pair
+        // Play nudge animation for each pair with ascending pitch
+        int totalBirds = pairedBirds.Count * 2;
+        int currentBirdIndex = 0;
+        
         foreach (var pair in pairedBirds)
         {
             if (pair.Item1 != null && pair.Item2 != null)
             {
+                // Calculate ascending pitch for first bird
+                float pitch1 = Mathf.Lerp(minCelebrationPitch, maxCelebrationPitch, (float)currentBirdIndex / (totalBirds - 1));
+                SoundManager.PlaySound("Bird_Celebrate", pitch1);
                 pair.Item1.PlayCelebrationNudge();
+                currentBirdIndex++;
                 
                 yield return new WaitForSeconds(0.05f);
 
+                // Calculate ascending pitch for second bird
+                float pitch2 = Mathf.Lerp(minCelebrationPitch, maxCelebrationPitch, (float)currentBirdIndex / (totalBirds - 1));
+                SoundManager.PlaySound("Bird_Celebrate", pitch2);
                 pair.Item2.PlayCelebrationNudge();
+                currentBirdIndex++;
                 
                 // Wait before next pair
                 yield return new WaitForSeconds(0.05f);

@@ -4,6 +4,11 @@ public class SoundManager : MonoBehaviour
 {
     public static void PlaySound(string soundName)
     {
+        PlaySound(soundName, -1f);
+    }
+    
+    public static void PlaySound(string soundName, float customPitch)
+    {
         // Load the audio clip from Resources/Sounds
         AudioClip clip = Resources.Load<AudioClip>("Sounds/" + soundName);
         
@@ -27,7 +32,12 @@ public class SoundManager : MonoBehaviour
                 break;
         }
         
-        if(varyPitch)
+        // Use custom pitch if provided, otherwise vary pitch randomly
+        if (customPitch > 0)
+        {
+            pitch = customPitch;
+        }
+        else if(varyPitch)
         {
             pitch = Random.Range(0.85f, 1.15f);
         }
