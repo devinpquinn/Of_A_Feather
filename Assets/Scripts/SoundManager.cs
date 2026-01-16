@@ -27,6 +27,9 @@ public class SoundManager : MonoBehaviour
         // Check for special behavior for specific sounds
         switch (soundName)
         {
+            case "Bird_Celebrate":
+                volume = 0.7f;
+                break;
             case "Pair_Fail":
                 volume = 0.7f;
                 break;
