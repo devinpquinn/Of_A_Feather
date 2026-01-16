@@ -296,7 +296,7 @@ public class BirdGameManager : MonoBehaviour
                 currentBirdIndex++;
                 
                 // Wait before next pair
-                yield return new WaitForSeconds(0.05f);
+                yield return new WaitForSeconds(0.075f);
             }
         }
         
