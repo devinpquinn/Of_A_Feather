@@ -274,21 +274,25 @@ public class BirdGameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         // Play nudge animation for each pair with ascending pitch
-        int totalBirds = pairedBirds.Count;
+        int totalBirds = pairedBirds.Count * 2;
         int currentBirdIndex = 0;
         
         foreach (var pair in pairedBirds)
         {
             if (pair.Item1 != null && pair.Item2 != null)
             {
+                // Calculate ascending pitch for first bird
+                float pitch1 = Mathf.Lerp(minCelebrationPitch, maxCelebrationPitch, (float)currentBirdIndex / (totalBirds - 1));
+                SoundManager.PlaySound("Bird_Celebrate", pitch1);
                 pair.Item1.PlayCelebrationNudge();
+                currentBirdIndex++;
                 
                 yield return new WaitForSeconds(0.05f);
 
+                // Calculate ascending pitch for second bird
+                float pitch2 = Mathf.Lerp(minCelebrationPitch, maxCelebrationPitch, (float)currentBirdIndex / (totalBirds - 1));
+                SoundManager.PlaySound("Bird_Celebrate", pitch2);
                 pair.Item2.PlayCelebrationNudge();
-                
-                float pitch1 = Mathf.Lerp(minCelebrationPitch, maxCelebrationPitch, (float)currentBirdIndex / (totalBirds - 1));
-                SoundManager.PlaySound("Bird_Celebrate", pitch1);
                 currentBirdIndex++;
                 
                 // Wait before next pair
