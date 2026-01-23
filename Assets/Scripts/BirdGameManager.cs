@@ -269,7 +269,7 @@ public class BirdGameManager : MonoBehaviour
         // Hide level text first
         levelText.GetComponent<Animator>().Play("LevelText_Out", 0, 0f);
         
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0f);
         
         // Play nudge animation for each pair with ascending pitch
         int totalBirds = pairedBirds.Count * 2;
