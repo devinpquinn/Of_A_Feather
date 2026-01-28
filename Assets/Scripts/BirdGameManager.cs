@@ -300,7 +300,7 @@ public class BirdGameManager : MonoBehaviour
         
         yield return new WaitForSeconds(0.4f);
         
-        SoundManager.PlaySound("Swoosh");
+        SoundManager.PlaySound("Swoosh", 1f);
         
         yield return new WaitForSeconds(0.1f);
         
