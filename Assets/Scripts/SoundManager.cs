@@ -4,10 +4,10 @@ public class SoundManager : MonoBehaviour
 {
     public static void PlaySound(string soundName)
     {
-        PlaySound(soundName, -1f);
+        PlaySound(soundName, -1f, -1f);
     }
     
-    public static void PlaySound(string soundName, float customPitch)
+    public static void PlaySound(string soundName, float customPitch, float customVolume = -1f)
     {
         // Load the audio clip from Resources/Sounds
         AudioClip clip = Resources.Load<AudioClip>("Sounds/" + soundName);
@@ -54,7 +54,7 @@ public class SoundManager : MonoBehaviour
         
         // Configure the AudioSource
         audioSource.clip = clip;
-        audioSource.volume = volume;
+        audioSource.volume = (customVolume > 0) ? customVolume : volume;
         audioSource.pitch = pitch;
         audioSource.loop = loop;
         
