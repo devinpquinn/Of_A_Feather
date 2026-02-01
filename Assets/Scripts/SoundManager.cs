@@ -30,12 +30,6 @@ public class SoundManager : MonoBehaviour
             case "Bird_Celebrate":
                 volume = 0.7f;
                 break;
-            case "Pair_Fail":
-                volume = 0.7f;
-                break;
-            case "Twinkle":
-                varyPitch = false;
-                break;
         }
         
         // Use custom pitch if provided, otherwise vary pitch randomly

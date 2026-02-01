@@ -498,7 +498,7 @@ public class BirdDragHandler : MonoBehaviour
         otherRandomizer.FlashMatchingParts(myRandomizer.GetColors());
         
         // Play sound effect
-        SoundManager.PlaySound("Pair_Fail");
+        SoundManager.PlaySound("Pair_Fail", -1f, 0.7f);
     }
     
     public void PlayCelebrationNudge()
