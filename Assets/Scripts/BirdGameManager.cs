@@ -266,12 +266,11 @@ public class BirdGameManager : MonoBehaviour
     
     private IEnumerator PlayCelebrationAnimation()
     {
-        // Hide level text first
+        victoryScreen.SetActive(true);
         levelText.GetComponent<Animator>().Play("LevelText_Out", 0, 0f);
-        
         SoundManager.PlaySound("Sparkle", 1f);
         
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(1f);
         
         // Play nudge animation for each pair with ascending pitch
         int totalBirds = pairedBirds.Count * 2;
@@ -299,11 +298,6 @@ public class BirdGameManager : MonoBehaviour
                 yield return new WaitForSeconds(0.075f);
             }
         }
-        
-        yield return new WaitForSeconds(0.1f);
-        
-        // Show victory screen AFTER all birds celebrate
-        victoryScreen.SetActive(true);
     }
     
     // Public methods for victory screen buttons
