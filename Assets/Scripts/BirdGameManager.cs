@@ -298,6 +298,10 @@ public class BirdGameManager : MonoBehaviour
                 yield return new WaitForSeconds(0.075f);
             }
         }
+        
+        yield return new WaitForSeconds(0.25f);
+        
+        victoryScreen.GetComponent<Animator>().SetTrigger("Celebrated");
     }
     
     // Public methods for victory screen buttons
