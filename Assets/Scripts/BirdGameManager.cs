@@ -270,7 +270,7 @@ public class BirdGameManager : MonoBehaviour
         levelText.GetComponent<Animator>().Play("LevelText_Out", 0, 0f);
         SoundManager.PlaySound("Sparkle", 1f);
         
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.75f);
         
         // Play nudge animation for each pair with ascending pitch
         int totalBirds = pairedBirds.Count * 2;
