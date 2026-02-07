@@ -69,6 +69,14 @@ public class BirdGameManager : MonoBehaviour
         UpdateLevelText();
         SpawnBirdPairs(numPairsToSpawn);
     }
+
+    private void Update()
+    {
+        if (!isResettingLevel && !IsRoundComplete && Input.GetKeyDown(KeyCode.S))
+        {
+            DebugSolvePairs();
+        }
+    }
     
     private float GetCameraScaleFactor()
     {
@@ -115,6 +123,61 @@ public class BirdGameManager : MonoBehaviour
         {
             backgroundObject.transform.localScale = Vector3.one * scaleFactor;
         }
+    }
+
+    private void DebugSolvePairs()
+    {
+        BirdDragHandler[] allBirds = FindObjectsByType<BirdDragHandler>(FindObjectsSortMode.None);
+        if (allBirds.Length < 2)
+        {
+            return;
+        }
+
+        List<BirdDragHandler> sortedBirds = new List<BirdDragHandler>(allBirds);
+        sortedBirds.Sort((a, b) =>
+        {
+            int orderA = GetBirdOrder(a);
+            int orderB = GetBirdOrder(b);
+            if (orderA != orderB)
+            {
+                return orderA.CompareTo(orderB);
+            }
+
+            return a.GetInstanceID().CompareTo(b.GetInstanceID());
+        });
+
+        for (int i = 0; i + 1 < sortedBirds.Count; i += 2)
+        {
+            BirdDragHandler birdA = sortedBirds[i];
+            BirdDragHandler birdB = sortedBirds[i + 1];
+            if (birdA == null || birdB == null)
+            {
+                continue;
+            }
+
+            if (birdA.CurrentPartner == birdB && birdB.CurrentPartner == birdA)
+            {
+                continue;
+            }
+
+            birdA.DebugForcePair(birdB);
+        }
+    }
+
+    private int GetBirdOrder(BirdDragHandler bird)
+    {
+        if (bird == null || string.IsNullOrEmpty(bird.gameObject.name))
+        {
+            return int.MaxValue;
+        }
+
+        string[] parts = bird.gameObject.name.Split(' ');
+        if (parts.Length == 2 && int.TryParse(parts[1], out int number))
+        {
+            return number;
+        }
+
+        return int.MaxValue;
     }
     
     private void SpawnBirdPairs(int pairCount)

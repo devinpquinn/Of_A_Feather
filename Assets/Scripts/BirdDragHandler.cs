@@ -48,6 +48,8 @@ public class BirdDragHandler : MonoBehaviour
     private Vector3 originalRotationParentLocalPosition;
     private Quaternion originalRotationParentLocalRotation;
 
+    public BirdDragHandler CurrentPartner => currentPartner;
+
     private void Start()
     {
         mainCamera = Camera.main;
@@ -507,6 +509,28 @@ public class BirdDragHandler : MonoBehaviour
         {
             animator.Play("Bird_Celebrate", 0, 0f);
         }
+    }
+
+    public void DebugForcePair(BirdDragHandler otherBird)
+    {
+        if (otherBird == null || otherBird == this)
+        {
+            return;
+        }
+
+        if (currentPartner == otherBird)
+        {
+            return;
+        }
+
+        BreakPair();
+
+        if (otherBird.currentPartner != null && otherBird.currentPartner != this)
+        {
+            otherBird.BreakPair();
+        }
+
+        EstablishPair(otherBird);
     }
 
     private void EstablishPair(BirdDragHandler otherBird)
